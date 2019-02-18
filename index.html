@@ -26,39 +26,76 @@ i.material-icons{
     vertical-align:middle;
 }
 .post{
-    max-width: 60%;
-    border: solid 1px #cccccc;
-    background-color:#ffffff;
-    max-width:100%;
+    background-color: #ffffff;
+    border-color: transparent;
+    border-left-width: 0;
+    border-right-width: 0;
+    position: relative;
+    max-width:750px;
     border-radius:3px;
     margin-bottom:1rem;
 }
+.post::before{
+    border: 1px solid #dddfe2;
+    border-radius: 4px;
+    bottom: -1px;
+    content: '';
+    left: -1px;
+    pointer-events: none;
+    position: absolute;
+    right: -1px;
+    top: -1px;
+}
+.post .new-post-pfp{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, .1);
+    bottom: 0;
+    content: '';
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0; 
+}
 .post input{
 	border:0;
+    max-height: 71px;
+    padding: 18px 12px 14px 12px;
     margin-left:.25rem;
     display:block;
-    font-size:.75rem;
+    word-wrap: break-word;
+    font-size:.9rem;
+    height: 100%;
+    width: 100%;
+    line-height: 28px;
     padding:1rem .75rem;
 }
 .post input::focus{
 	border:0;
     font-size:1rem;
 }
+.clearfix:after {
+    clear: both;
+    content: ".";
+    display: block;
+    font-size: 0;
+    height: 0;
+    line-height: 0;
+    visibility: hidden;
+}
 .post-header{
-    padding: 8px 0;
-    padding-right: 24px;
     background-color: #f5f6f7;
     border-bottom: 1px solid #dddfe2;
     font-weight: bold;
+    padding: 5px 6px 8px 6px;
     border-radius:3px 3px 0 0;
 }
 .post-header span{
-    display: inline-block;
     color: #4b4f56;
+    display: inline-block;
     font-size: 12px;
     font-weight: 600;
-    margin-right:.5rem;
-    margin-bottom: .25rem;
     line-height: 14px;
 }
 .profile-img{
@@ -74,7 +111,7 @@ i.material-icons{
 	vertical-align:middle;
 }
 .post-top{
-  	margin:12px 0 1rem 12px;
+  	padding:12px 0 1rem 12px;
 }
 .post-top .name{
 	font-size:14px;
@@ -118,6 +155,7 @@ i.material-icons{
     border-bottom: 1px solid #dadde1;
     color: #606770;
     display: flex;
+    resize: none;
     font-size: 13px;
     line-height: 20px;
     margin: 12px 12px 0 12px;
@@ -143,6 +181,28 @@ i.material-icons{
 .post-actions{
     margin:.5rem .75rem 1.25rem .75rem;
     display: block;
+}
+.new-post-actions{
+    margin-top:.75rem;
+    border-top: 1px solid #dadde1;
+    padding:.65rem .75rem 0 .5rem;
+    display: flex;
+    resize: none;
+}
+.fb-btn{
+    background-color: #4267b2;
+    border: 0;
+    border-radius: 2px;
+    color: #fff;
+    cursor: pointer;
+    -webkit-font-smoothing: subpixel-antialiased;
+    font-weight: normal;
+    font-weight: bold;
+    font-size: .75rem;
+    overflow: hidden;
+    padding: .5em 1.5em;
+    text-align: center;
+    text-overflow: ellipsis;
 }
 .post-actions a {
   color:hsl(0, 0%, 40%) !important;
@@ -215,6 +275,7 @@ i.material-icons{
     display: inline-block;
     color:#9a9999;
 }
+
 </style>
 </head>
 <body>
@@ -225,7 +286,16 @@ i.material-icons{
     <span>Create Post</span>
   </div>
   <div class="post-content">
-  	<input type="text" placeholder="What's on your mind?">
+  	<div style="overflow: hidden;">
+        <!--<div style="float: left; min-height: 1px;position: relative;"><img class="new-post-pfp" style="border-radius: 50%; overflow: hidden;float: left; margin: 12px 0 0 12px;" src="https://benworld.net/protected/u/enzo-pfp-sm.jpg"></div>-->
+        <input type="text" class="clearfix" placeholder="What's on your mind?">
+        <div class="post-bottom">
+            <div class="new-post-actions">
+                <span style="color:transparent;align-items: center; display: flex; flex-grow: 1; overflow: hidden;">.</span>
+                <button class="fb-btn">Post</button>
+            </div>
+        </div>
+    </div>
   </div>
 </div>
 
