@@ -22,11 +22,15 @@ a {
     display: inline-block;
     vertical-align: middle;
 }
+i.material-icons{
+    vertical-align:middle;
+}
 .post{
+    max-width: 60%;
     border: solid 1px #cccccc;
     background-color:#ffffff;
     max-width:100%;
-    border-radius:5px;
+    border-radius:3px;
     margin-bottom:1rem;
 }
 .post input{
@@ -41,11 +45,21 @@ a {
     font-size:1rem;
 }
 .post-header{
-	background-color:#fafafa;
-    color:#4b4f56;
-    border-bottom: solid 1px #cccccc;
-    padding:.5rem;
-    border-radius:4px 4px 0 0;
+    padding: 8px 0;
+    padding-right: 24px;
+    background-color: #f5f6f7;
+    border-bottom: 1px solid #dddfe2;
+    font-weight: bold;
+    border-radius:3px 3px 0 0;
+}
+.post-header span{
+    display: inline-block;
+    color: #4b4f56;
+    font-size: 12px;
+    font-weight: 600;
+    margin-right:.5rem;
+    margin-bottom: .25rem;
+    line-height: 14px;
 }
 .profile-img{
   vertical-align:middle;
@@ -56,12 +70,6 @@ a {
   	margin-right:.25rem;
   	max-width:2.5rem;
 }
-.post-content{
-
-}
-.post-content h2,h3,h4,h5,p{
-	padding:0 1rem;
-}
 .post-top i{
 	vertical-align:middle;
 }
@@ -70,32 +78,142 @@ a {
 }
 .post-top .name{
 	font-size:14px;
-    margin-bottom:.25rem;
     font-weight:600;
     vertical-align:middle;
     margin-left:.25rem;
-}
-.post .more-icon{
-    color:#6c6c6c;
-    float:right;
-    margin-top:-.5rem;
-    margin-right:-.25rem;
-    cursor:pointer;
+    line-height: 1.5;
 }
 .post-top .time{
     margin-left:.25rem;
     margin-top:-.25rem;
-    font-size: .85rem;
+    font-size: 13px;
+    line-height: 1.5;
     color:#616770;
     vertical-align: middle;
     display: block;
 }
 .listed-icon{
-    font-size:.85rem !important;
+    font-size:13px !important;
     color:#616770;
 }
+.post-content{
+    margin-top: 6px;
+    padding-bottom: 12px;
+    font-size: 16px;
+    font-weight: normal;
+    line-height: 1.38;
+}
+.post-content h2,h3,h4,h5,p{
+	padding:0 1rem;
+    margin: 0;
+}
 .post-content img{
-  margin-top:.75rem;
+    margin-top:.75rem;
+}
+.post-bottom-inside{
+    background-color: #fff;
+}
+.post-info{
+    align-items: center;
+    border-bottom: 1px solid #dadde1;
+    color: #606770;
+    display: flex;
+    font-size: 13px;
+    line-height: 20px;
+    margin: 12px 12px 0 12px;
+    padding: 0 0 10px 0;
+}
+.post-info span{
+    margin:0 2px;
+}
+.post-info .likes{
+    align-items: center;
+    display: flex;
+    flex-grow: 1;
+    overflow: hidden;
+}
+.post-info i{
+    background-color:#4c88f2;
+    padding:3px;
+    border-radius: 50%;
+    color:#ffffff;
+    font-size: 10px;
+    margin-right:5px;
+}
+.post-actions{
+    margin:.5rem .75rem 1.25rem .75rem;
+    display: block;
+}
+.post-actions a {
+  color:hsl(0, 0%, 40%) !important;
+  margin:0 .25rem;
+  padding:3px 7px;
+  text-decoration: none;
+  -webkit-transition: background-color .2s;
+  transition: background-color .2s;
+}
+.post-actions a:hover {
+  color:hsl(0, 0%, 30%) !important;
+  border-radius:5px;
+  padding:3px 7px;
+  text-decoration: none;
+  background-color:rgba(235,235,235,1);
+}
+.post-actions a:active {
+  color:hsl(0, 0%, 28%) !important;
+}
+.post-comment-sec{
+    border-top: 1px solid #dadde1;
+    padding:1rem 1rem .4rem 1rem;
+    border-radius:0px 0px 3px 3px;
+    font-size: 88%;
+}
+.post-comment-sec img{
+    width:30px !important;
+    margin-right:.25rem !important;
+}
+.post-comment{
+    margin-bottom:.6rem;
+    margin-right: 1rem;
+    max-width: 100%;
+    white-space: nowrap;
+}
+.post-comment.reply{
+    display: inline-block;
+}
+.post .reply-icon{
+    margin-left:.5rem;
+    color:#a0a0a0;
+    font-size:1rem;
+    white-space: nowrap;
+    display: inline-block;
+}
+.post-comment .comment-text{
+    padding:8px 10px;
+    background-color: #f2f3f5;
+    border-radius: 18px;
+    box-sizing: border-box;
+    color: #1c1e21;
+    display: inline-block;
+    line-height: 16px;
+    margin: 0;
+    max-width: 90%;
+    word-wrap: break-word;
+    position: relative;
+    white-space: normal;
+    word-break: break-word;
+}
+.comment-name{
+    color: #365899;
+    line-height: inherit;
+    font-weight: 600;
+    margin-right: 2px;
+}
+.post-comment .time{
+    padding:5px 4px 5px 4px;
+    vertical-align: middle;
+    display: inline-block;
+    color:#9a9999;
 }
 </style>
 </head>
@@ -112,32 +230,67 @@ a {
 </div>
 
 <div class="post">
-  <div class="post-top"><a href="#"><img class="profile-img" src="https://benworld.net/protected/u/enzo-pfp-sm.jpg"></a><div class="inline-block"><a class="has-text-weight-semibold name" href="#"><span id="username"></span></a><span class="time"><small><span id="date"></span></small> · <i class="material-icons listed-icon">public</i></span></div>
-</div>
-          
-  <div class="post-content">
-
-        
-        
+      <div class="post-top"><a href="#"><img class="profile-img" src="https://benworld.net/protected/u/enzo-pfp-sm.jpg"></a><div class="inline-block"><a class="has-text-weight-semibold name" href="#"><span id="username"></span></a><span class="time"><small><span id="date"></span></small> · <i class="material-icons listed-icon">public</i></span></div>
+    </div>
+    <span class="hr"></span>
+      <div class="post-content">
+        <h4 id="content">Loading...</h4>
       </div>
-  	<h4 id="content">Loading...</h4>
-  </div>
+    <div class="post-bottom">
+        <div class="post-bottom-inside">
+            <div class="post-info"><span class="likes"><i class="material-icons">thumb_up</i> <span id="likes"></span> Likes</span> <span>1 Comment</span></div>
+            <div class="post-actions">
+                <i style="color:transparent;">.</i><a href="#" style="float:left;"><i class="material-icons">thumb_up</i> <small style="vertical-align:middle;"> Like</small></a><a href="#" style="float:right;"><i class="material-icons">comment</i> <small style="vertical-align:middle;"> Comment</small></a>
+            </div>
+        </div>
+            <div class="post-comment-sec">
+              <div style="max-width: 85%">
+                <div class="post-comment">
+                    <a href="#"><img class="profile-img" src="//benworld.net/protected/u/1.png"></a>
+                    <div class="comment-text"><a class="comment-name">Ben Border</a> This is a comment</div><span class="time">1 day</span>
+                </div>
+                <div class="post-comment">
+                    <a href="#"><img class="profile-img" src="//benworld.net//protected/u/blank.png"></a>
+                    <span class="comment-text"><a class="comment-name">Person</a> Another comment boi</span><span class="time">1 day</span>
+                </div>
+                <i class="material-icons reply-icon">subdirectory_arrow_right</i><div class="post-comment reply">
+                <a href="#"><img class="profile-img" src="//benworld.net//protected/u/1.png"></a>
+                <span class="comment-text"><a class="comment-name">Ben Border</a> This is a reply to a comment</span><span class="time">2 min</span>
+                </div>
+                <div class="post-comment">
+                    <a href="#"><img class="profile-img" src="//benworld.net//protected/u/blank.png"></a>
+                    <span class="comment-text"><a class="comment-name">Yeet</a> Another comment boi</span><span class="time">1 min</span>
+                </div>
+              </div>
+            </div>  
+    </div>
 </div>
 <script>
-// - Get post json and fill in details - //
-var xhttp = new XMLHttpRequest();
-xhttp.onreadystatechange = function() {
+// - Get post json and fill in post - //
+var xhttpPost = new XMLHttpRequest();
+xhttpPost.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-       // Typical action to be performed when the document is ready:
-       var tmp = JSON.parse(xhttp.responseText);
+       // Request is complete
+       var tmp = JSON.parse(xhttpPost.responseText);
        document.getElementById("username").innerHTML = tmp[0]['username'];
        document.getElementById("content").innerHTML = tmp[0]['content'];
        document.getElementById("date").innerHTML = formatDateTime(sqlToJsDate(tmp[0]['date']));
     }
 };
-xhttp.open("GET", "https://dev.benworld.net/api/get.post.php?id=1", true);
-xhttp.send();
-
+xhttpPost.open("GET", "https://dev.benworld.net/api/get.post.php?id=1", true);
+xhttpPost.send();
+// - Get likes and fill in post - //
+var xhttpLikes = new XMLHttpRequest();
+xhttpLikes.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+       // Request is complete
+       var tmp = JSON.parse(xhttpLikes.responseText);
+       console.log(tmp.length);
+       document.getElementById("likes").innerHTML = tmp.length;
+    }
+};
+xhttpLikes.open("GET", "https://dev.benworld.net/api/get.post.likes.php?postid=1", true);
+xhttpLikes.send();
 
 // --- Functions ---- //
 function formatDateTime(date){
