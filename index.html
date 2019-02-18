@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Facebook Clone</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+<style>
+/* --- Basic things --- */
+body{
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, '.SFNSText-Regular', sans-serif;
+  background-color:#e9ebee;
+}
+a {
+    color: #365899;
+    cursor: pointer;
+    text-decoration: none;
+}
+/* - End Basic things - */
+.inline-block{
+    display: inline-block;
+    vertical-align: middle;
+}
+.post{
+    border: solid 1px #cccccc;
+    background-color:#ffffff;
+    max-width:100%;
+    border-radius:5px;
+    margin-bottom:1rem;
+}
+.post input{
+	border:0;
+    margin-left:.25rem;
+    display:block;
+    font-size:.75rem;
+    padding:1rem .75rem;
+}
+.post input::focus{
+	border:0;
+    font-size:1rem;
+}
+.post-header{
+	background-color:#fafafa;
+    color:#4b4f56;
+    border-bottom: solid 1px #cccccc;
+    padding:.5rem;
+    border-radius:4px 4px 0 0;
+}
+.profile-img{
+  vertical-align:middle;
+  border-radius:50%;
+}
+.post-top .profile-img{
+	border: 1px solid rgba(0, 0, 0, .1);
+  	margin-right:.25rem;
+  	max-width:2.5rem;
+}
+.post-content{
+
+}
+.post-content h2,h3,h4,h5,p{
+	padding:0 1rem;
+}
+.post-top i{
+	vertical-align:middle;
+}
+.post-top{
+  	margin:12px 0 1rem 12px;
+}
+.post-top .name{
+	font-size:14px;
+    margin-bottom:.25rem;
+    font-weight:600;
+    vertical-align:middle;
+    margin-left:.25rem;
+}
+.post .more-icon{
+    color:#6c6c6c;
+    float:right;
+    margin-top:-.5rem;
+    margin-right:-.25rem;
+    cursor:pointer;
+}
+.post-top .time{
+    margin-left:.25rem;
+    margin-top:-.25rem;
+    font-size: .85rem;
+    color:#616770;
+    vertical-align: middle;
+    display: block;
+}
+.listed-icon{
+    font-size:.85rem !important;
+    color:#616770;
+}
+.post-content img{
+  margin-top:.75rem;
+}
+</style>
+</head>
+<body>
+<h1>Dev</h1>
+<div class="post">
+  <div class="post-header">
+  	<span class="pfp"></span>
+    <span>Create Post</span>
+  </div>
+  <div class="post-content">
+  	<input type="text" placeholder="What's on your mind?">
+  </div>
+</div>
+
+<div class="post">
+  <div class="post-top"><a href="#"><img class="profile-img" src="https://benworld.net/protected/u/enzo-pfp-sm.jpg"></a><div class="inline-block"><a class="has-text-weight-semibold name" href="#"><span id="username"></span></a><span class="time"><small><span id="date"></span></small> · <i class="material-icons listed-icon">public</i></span></div>
+</div>
+          
+  <div class="post-content">
+
+        
+        
+      </div>
+  	<h4 id="content">Loading...</h4>
+  </div>
+</div>
+<script>
+// - Get post json and fill in details - //
+var xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+       // Typical action to be performed when the document is ready:
+       var tmp = JSON.parse(xhttp.responseText);
+       document.getElementById("username").innerHTML = tmp[0]['username'];
+       document.getElementById("content").innerHTML = tmp[0]['content'];
+       document.getElementById("date").innerHTML = formatDateTime(sqlToJsDate(tmp[0]['date']));
+    }
+};
+xhttp.open("GET", "https://dev.benworld.net/api/get.post.php?id=1", true);
+xhttp.send();
+
+
+// --- Functions ---- //
+function formatDateTime(date){
+//formats date and time to 1/1/2019
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var ampm = hours >= 12 ? 'pm' : 'am';
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  minutes = minutes < 10 ? '0'+minutes : minutes;
+  var strTime = hours + ':' + minutes + ' ' + ampm;
+  return date.getMonth()+1 + "/" + date.getDate() + "/" + date.getFullYear() + "  " + strTime;
+}
+function sqlToJsDate(sqlDate){
+//turns sql date from table to javascript format
+//author: https://deepinthecode.com/2014/08/05/converting-a-sql-datetime-to-a-javascript-date/
+    //sqlDate in SQL DATETIME format ("yyyy-mm-dd hh:mm:ss.ms")
+    var sqlDateArr1 = sqlDate.split("-");
+    //format of sqlDateArr1[] = ['yyyy','mm','dd hh:mm:ms']
+    var sYear = sqlDateArr1[0];
+    var sMonth = (Number(sqlDateArr1[1]) - 1).toString();
+    var sqlDateArr2 = sqlDateArr1[2].split(" ");
+    //format of sqlDateArr2[] = ['dd', 'hh:mm:ss.ms']
+    var sDay = sqlDateArr2[0];
+    var sqlDateArr3 = sqlDateArr2[1].split(":");
+    //format of sqlDateArr3[] = ['hh','mm','ss.ms']
+    var sHour = sqlDateArr3[0];
+    var sMinute = sqlDateArr3[1];
+    var sqlDateArr4 = sqlDateArr3[2].split(".");
+    //format of sqlDateArr4[] = ['ss','ms']
+    var sSecond = sqlDateArr4[0];
+    
+    return new Date(sYear,sMonth,sDay,sHour,sMinute,sSecond);
+}
+</script>
+</body>
+</html>
