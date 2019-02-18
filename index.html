@@ -149,8 +149,11 @@ i.material-icons{
     font-size: 10px;
     margin-right:5px;
 }
+/* Facebook button */
+/* Credit to www.facebook.com */
 .fb-btn{
     background-color: #4267b2;
+    border-color: #4267b2;
     border: 0;
     border-radius: 2px;
     color: #fff;
@@ -163,12 +166,19 @@ i.material-icons{
     padding: .5em 1.5em;
     text-align: center;
     text-overflow: ellipsis;
+    transition: 200ms cubic-bezier(.08,.52,.52,1) background-color, 200ms cubic-bezier(.08,.52,.52,1) box-shadow, 200ms cubic-bezier(.08,.52,.52,1) transform
 }
-.fb-btn::focus{
-    background-color: #29487d;
+.fb-btn:hover{
+    background-color: #365899;
+    border-color: #365899;
 }
-.fb-btn::hover{
+.fb-btn:focus{
     background-color: #29487d;
+    border-color: #29487d;
+}
+.fb-btn:active{
+    background-color: #29487d;
+    border-color: #29487d;
 }
 /* Post actions */
 .post-actions{
@@ -249,7 +259,7 @@ i.material-icons{
 }
 /* New post */
 /* Credit to https://codepen.io/hoanganhuynh */
-.create-status {
+.create-status{
 	font-size: 13px;
 	width: 504px;
 	height: 158px;
@@ -257,7 +267,7 @@ i.material-icons{
 	border: 1px solid #dddfe2;
 	border-radius: 3px;
 }
-.create-title {
+.create-title{
 	border-bottom: 1px solid lightgray;
 	background-color: #eee;
 	height: 34px;
@@ -265,14 +275,14 @@ i.material-icons{
 	box-sizing: border-box;
 	font-weight: 600;
 }
-.avatar-and-content-status {
+.avatar-and-content-status{
 	display: flex;
     height: 72px;
     margin: 0 auto;
     margin-left: 1rem;
     margin-top: .5rem;
 }
-.avatar-and-content-status .avatar-status {
+.avatar-and-content-status .avatar-status{
 	background-image: url('https://benworld.net/protected/u/enzo-pfp-sm.jpg');
     background-size: cover;
     background-position: center;
