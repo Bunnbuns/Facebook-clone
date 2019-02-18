@@ -179,7 +179,19 @@ i.material-icons{
 .fb-btn:active{
     background-color: #29487d;
     border-color: #29487d;
+    box-shadow: none;
+    transform: scale(.98)
 }
+.fb-btn:active:after{
+    bottom: 0;
+    content: '';
+    left: -2%;
+    position: absolute;
+    right: -2%;
+    top: 0;
+    z-index: -1
+}
+/* --- */
 /* Post actions */
 .post-actions{
     margin:.5rem .75rem 1.25rem .75rem;
