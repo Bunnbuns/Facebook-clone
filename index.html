@@ -58,9 +58,9 @@ i.material-icons{
     right: 0;
     top: 0; 
 }
-.post input{
+.post textarea{
+    resize: none;
 	border:0;
-    max-height: 71px;
     padding: 18px 12px 14px 12px;
     margin-left:.25rem;
     display:block;
@@ -68,11 +68,12 @@ i.material-icons{
     font-size:.9rem;
     height: 100%;
     width: 100%;
+    max-width: 700px;
     line-height: 28px;
     padding:1rem .75rem;
     outline: none;
 }
-.post input::focus{
+.post textarea::focus{
 	border:0;
     font-size:1.125rem;
 }
@@ -287,9 +288,9 @@ i.material-icons{
     <span>Create Post</span>
   </div>
   <div class="post-content">
-  	<div style="overflow: hidden;">
+  	<div style="max-width: 100%">
         <!--<div style="float: left; min-height: 1px;position: relative;"><img class="new-post-pfp" style="border-radius: 50%; overflow: hidden;float: left; margin: 12px 0 0 12px;" src="https://benworld.net/protected/u/enzo-pfp-sm.jpg"></div>-->
-        <input type="text" class="clearfix" placeholder="What's on your mind?">
+        <textarea type="text" class="clearfix" placeholder="What's on your mind?"></textarea>
         <div class="post-bottom">
             <div class="new-post-actions">
                 <span style="color:transparent;align-items: center; display: flex; flex-grow: 1; overflow: hidden;">.</span>
