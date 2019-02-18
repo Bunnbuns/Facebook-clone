@@ -184,13 +184,6 @@ i.material-icons{
     margin:.5rem .75rem 1.25rem .75rem;
     display: block;
 }
-.new-post-actions{
-    margin-bottom: .25rem;
-    border-top: 1px solid #dadde1;
-    padding:.75rem .75rem 0 .5rem;
-    display: flex;
-    resize: none;
-}
 .fb-btn{
     background-color: #4267b2;
     border: 0;
@@ -277,7 +270,58 @@ i.material-icons{
     display: inline-block;
     color:#9a9999;
 }
-
+/* New post */
+/* Credit to https://codepen.io/hoanganhuynh */
+.create-status {
+	font-size: 13px;
+	width: 504px;
+	height: 158px;
+    background-color: #ffffff;
+	border: 1px solid #dddfe2;
+	border-radius: 3px;
+}
+.create-title {
+	border-bottom: 1px solid lightgray;
+	background-color: #eee;
+	height: 34px;
+	padding: 8px 8px;
+	box-sizing: border-box;
+	font-weight: 600;
+}
+.avatar-and-content-status {
+	display: flex;
+    height: 72px;
+    margin: 0 auto;
+    margin-left: 1rem;
+}
+.avatar-and-content-status .avatar-status {
+	background-image: url('https://benworld.net/protected/u/enzo-pfp-sm.jpg');
+    background-size: cover;
+    background-position: center;
+    width: 37px;
+    height: 37px;
+    border-radius: 50%;
+    margin: 9px 0px;
+}
+.avatar-and-content-status .content-status{
+	width: auto;
+	height: auto;
+	margin: 17px 10px;
+}
+.content-status .content-status-input {
+	border: none;
+	outline: none;
+    font-size: .9rem;
+    margin-top:-10px;
+    padding:10px 0 1rem 5px;
+}
+/* --- */
+.new-post-actions{
+    border-top: 1px solid #dadde1;
+    padding:.5rem .75rem .5rem 0;
+    display: flex;
+    resize: none;
+}
 </style>
 </head>
 <body>
@@ -287,18 +331,16 @@ i.material-icons{
   	<span class="pfp"></span>
     <span>Create Post</span>
   </div>
-  <div class="post-content">
-  	<div style="max-width: 100%">
-        <!--<div style="float: left; min-height: 1px;position: relative;"><img class="new-post-pfp" style="border-radius: 50%; overflow: hidden;float: left; margin: 12px 0 0 12px;" src="https://benworld.net/protected/u/enzo-pfp-sm.jpg"></div>-->
-        <textarea type="text" class="clearfix" placeholder="What's on your mind?"></textarea>
-        <div class="post-bottom">
-            <div class="new-post-actions">
-                <span style="color:transparent;align-items: center; display: flex; flex-grow: 1; overflow: hidden;">.</span>
-                <button class="fb-btn">Post</button>
-            </div>
-        </div>
+		<div class="avatar-and-content-status">
+			<div class="avatar-status"></div>
+			<div class="content-status">
+				<input class="content-status-input" type="text" name="text" placeholder="What's on your mind?">
+			</div>
+		</div>
+    <div class="new-post-actions">
+        <span style="color:transparent;align-items: center; display: flex; flex-grow: 1; overflow: hidden;">.</span>
+        <button class="fb-btn">Post</button>
     </div>
-  </div>
 </div>
 
 <div class="post">
