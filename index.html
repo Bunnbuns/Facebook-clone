@@ -46,38 +46,7 @@ i.material-icons{
     right: -1px;
     top: -1px;
 }
-.post .new-post-pfp{
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 1px solid rgba(0, 0, 0, .1);
-    bottom: 0;
-    content: '';
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 0; 
-}
-.post textarea{
-    resize: none;
-	border:0;
-    padding: 18px 12px 14px 12px;
-    margin-left:.25rem;
-    display:block;
-    word-wrap: break-word;
-    font-size:.9rem;
-    height: 100%;
-    width: 100%;
-    max-width: 700px;
-    line-height: 28px;
-    padding:1rem .75rem;
-    outline: none;
-}
-.post textarea::focus{
-	border:0;
-    font-size:1.125rem;
-}
-.clearfix:after {
+.clearfix::after {
     clear: both;
     content: ".";
     display: block;
@@ -180,10 +149,6 @@ i.material-icons{
     font-size: 10px;
     margin-right:5px;
 }
-.post-actions{
-    margin:.5rem .75rem 1.25rem .75rem;
-    display: block;
-}
 .fb-btn{
     background-color: #4267b2;
     border: 0;
@@ -198,6 +163,17 @@ i.material-icons{
     padding: .5em 1.5em;
     text-align: center;
     text-overflow: ellipsis;
+}
+.fb-btn::focus{
+    background-color: #29487d;
+}
+.fb-btn::hover{
+    background-color: #29487d;
+}
+/* Post actions */
+.post-actions{
+    margin:.5rem .75rem 1.25rem .75rem;
+    display: block;
 }
 .post-actions a {
   color:hsl(0, 0%, 40%) !important;
@@ -217,6 +193,7 @@ i.material-icons{
 .post-actions a:active {
   color:hsl(0, 0%, 28%) !important;
 }
+/* Comment section */
 .post-comment-sec{
     border-top: 1px solid #dadde1;
     padding:1rem 1rem .4rem 1rem;
@@ -293,6 +270,7 @@ i.material-icons{
     height: 72px;
     margin: 0 auto;
     margin-left: 1rem;
+    margin-top: .5rem;
 }
 .avatar-and-content-status .avatar-status {
 	background-image: url('https://benworld.net/protected/u/enzo-pfp-sm.jpg');
@@ -309,6 +287,7 @@ i.material-icons{
 	margin: 17px 10px;
 }
 .content-status .content-status-input {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, '.SFNSText-Regular', sans-serif;
 	border: none;
 	outline: none;
     font-size: .9rem;
