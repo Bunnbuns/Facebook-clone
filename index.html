@@ -18,6 +18,9 @@ a {
     cursor: pointer;
     text-decoration: none;
 }
+img {
+    border: 0;
+}
 .clearfix:after {
     clear: both;
     content: ".";
@@ -133,7 +136,7 @@ nav .nav .title{
 .post-top .time{
     margin-left:.25rem;
     margin-top:-.25rem;
-    font-size: 13px;
+    font-size: 12px;
     line-height: 1.5;
     color:#616770;
     vertical-align: middle;
@@ -259,16 +262,17 @@ nav .nav .title{
 /* Comment section */
 .post-comment-sec{
     border-top: 1px solid #dadde1;
-    padding:1rem 1rem .4rem 1rem;
+    padding:.4rem 1rem .4rem 1rem;
     border-radius:0px 0px 3px 3px;
     font-size: 88%;
 }
-.post-comment-sec img{
-    width:30px !important;
-    margin-right:.25rem !important;
+.post-comment-sec .profile-img{
+    width:32px;
+    margin-right:.25rem;
 }
 .post-comment{
     margin-bottom:.6rem;
+    margin-top:.25rem;
     margin-right: 1rem;
     max-width: 100%;
     white-space: nowrap;
@@ -292,6 +296,7 @@ nav .nav .title{
     display: inline-block;
     line-height: 16px;
     margin: 0;
+    font-size: 88%;
     max-width: 90%;
     word-wrap: break-word;
     position: relative;
@@ -308,7 +313,10 @@ nav .nav .title{
     padding:5px 4px 5px 4px;
     vertical-align: middle;
     display: inline-block;
-    color:#9a9999;
+    color:#a5a5a5;
+}
+.sp{
+    margin:1rem;
 }
 /* New post */
 /* Credit to https://codepen.io/hoanganhuynh */
@@ -365,6 +373,52 @@ nav .nav .title{
     padding:.5rem .75rem .5rem 0;
     display: flex;
     resize: none;
+}
+/* New comment input */
+/* Credit to https://codepen.io/sofiapineda */
+.fb-card-comments {
+    display: flex;
+    position: relative;
+    margin-top: .5rem;
+    width:100%;
+}
+.fb-user-comment {
+    width: 32px;
+    vertical-align: middle;
+    height: 32px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+fb-user-comment::after{
+    border: 1px solid rgba(0, 0, 0, .1);
+    border-radius: 50%;
+    bottom: 0;
+    content: '';
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.fb-card-input {
+    padding: 8px 10px;
+    border-radius: 20px;
+    border: none;
+    vertical-align: middle;
+    background-color: #f2f3f5;
+    border: 1px solid #ccd0d5;
+    margin-left: 3px;
+    font-size: .75rem;
+    min-width: 70%;
+    width: 90%;
+}
+.fb-card-input:focus{
+    outline:none;
+}
+.fb-card-input-icons {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    color: #61676f;
 }
 /* Media stuff */
 @media screen and (max-width: 1010px){
@@ -465,31 +519,27 @@ nav .nav .title{
             </div>
         </div>
             <div class="post-comment-sec">
-              <div style="max-width: 85%">
+                    <div class="post-comment">
+                        <a href="#"><img class="profile-img" src="//benworld.net//protected/u/blank.png"></a>
+                        <span class="comment-text"><a class="comment-name">Yeet</a> Another comment boi</span><span class="time">1 min</span>
+                    </div>
                 <div class="post-comment">
-                    <a href="#"><img class="profile-img" src="//benworld.net/protected/u/1.png"></a>
-                    <div class="comment-text"><a class="comment-name">Ben Border</a> This is a comment</div><span class="time">1 day</span>
+                    <div class="fb-card-comments">
+                      <img class="fb-user-comment" src="https://benworld.net/protected/u/enzo-pfp-sm.jpg">
+                      <input class="fb-card-input" placeholder="Write a comment">
+                      <div class="fb-card-input-icons">
+                      </div>
+                    </div>
                 </div>
-                <div class="post-comment">
-                    <a href="#"><img class="profile-img" src="//benworld.net//protected/u/blank.png"></a>
-                    <span class="comment-text"><a class="comment-name">Person</a> Another comment boi</span><span class="time">1 day</span>
-                </div>
-                <i class="material-icons reply-icon">subdirectory_arrow_right</i><div class="post-comment reply">
-                <a href="#"><img class="profile-img" src="//benworld.net//protected/u/1.png"></a>
-                <span class="comment-text"><a class="comment-name">Ben Border</a> This is a reply to a comment</span><span class="time">2 min</span>
-                </div>
-                <div class="post-comment">
-                    <a href="#"><img class="profile-img" src="//benworld.net//protected/u/blank.png"></a>
-                    <span class="comment-text"><a class="comment-name">Yeet</a> Another comment boi</span><span class="time">1 min</span>
-                </div>
-              </div>
-            </div>  
+            </div>
+        
     </div>
 </div>-->
 <div id="loading-posts">Loading...</div>
 <div id="timeline">
     
 </div>
+<br />
 <!-- End .body --></div>
 <script>
 window.onload = function(){
@@ -565,12 +615,12 @@ function getPost(postid){
     xhttpPost.open("GET", "https://dev.benworld.net/api/get.post.php?id="+postid, true);
     xhttpPost.send();
 }
-function putPost(postid){
+function putPost(){
     // Request is complete //
     document.getElementById("loading-posts").style.display ="none";
     var timeline = document.getElementById("timeline");
     var tmp = JSON.parse(this.responseText);
-    post = '<div class="post" id="'+tmp[0].id+'"> <div class="post-top"><a href="#"><img class="profile-img" src="https://benworld.net/protected/u/enzo-pfp-sm.jpg"></a><div class="inline-block"><a class="has-text-weight-semibold name" href="#"><span id="'+tmp[0].id+'-name">@'+tmp[0].username+'</span></a><span class="time">'+formatDateTime(sqlToJsDate(tmp[0]['date']))+'<small><span id="date"></span></small> · <i class="material-icons listed-icon">public</i></span></div> </div> <span class="hr"></span> <div class="post-content"> <h4 id="content">'+tmp[0].content+'</h4> </div> <div class="post-bottom"> <div class="post-bottom-inside"> <div class="post-info"><span class="likes"><i class="material-icons">thumb_up</i> <span id="'+tmp[0].id+'-likes">? Likes</span> </span> <span><span id="'+tmp[0].id+'-commentNum">? Comments</span></span></div> <div class="post-actions"> <i style="color:transparent;">.</i><a href="#" style="float:left;"><i class="material-icons">thumb_up_alt</i> <small style="vertical-align:middle;"> Like</small></a><a href="#" style="float:right;"><i class="material-icons">comment</i> <small style="vertical-align:middle;"> Comment</small></a> </div> </div> <div class="post-comment-sec"> <div style="max-width: 85%"> <div class="post-comment"> <a href="#"><img class="profile-img" src="//benworld.net/protected/u/1.png"></a> <div class="comment-text"><a class="comment-name">Ben Border</a> This is a comment</div><span class="time">1 day</span> </div> <div class="post-comment"> <a href="#"><img class="profile-img" src="//benworld.net//protected/u/blank.png"></a> <span class="comment-text"><a class="comment-name">Person</a> Another comment boi</span><span class="time">1 day</span> </div> <i class="material-icons reply-icon">subdirectory_arrow_right</i><div class="post-comment reply"> <a href="#"><img class="profile-img" src="//benworld.net//protected/u/1.png"></a> <span class="comment-text"><a class="comment-name">Ben Border</a> This is a reply to a comment</span><span class="time">2 min</span> </div> <div class="post-comment"> <a href="#"><img class="profile-img" src="//benworld.net//protected/u/blank.png"></a> <span class="comment-text"><a class="comment-name">Yeet</a> Another comment boi</span><span class="time">1 min</span> </div> </div> </div> </div> </div>';
+    post = '<div class="post" id="'+tmp[0].id+'"> <div class="post-top"><a href="#"><img class="profile-img" src="https://benworld.net/protected/u/enzo-pfp-sm.jpg"></a><div class="inline-block"><a class="has-text-weight-semibold name" href="#"><span id="'+tmp[0].id+'-name">@'+tmp[0].username+'</span></a><span class="time">'+formatDateTime(sqlToJsDate(tmp[0]['date']))+'<small><span id="date"></span></small> · <i class="material-icons listed-icon">public</i></span></div> </div> <span class="hr"></span> <div class="post-content"> <h4 id="content">'+tmp[0].content+'</h4> </div> <div class="post-bottom"> <div class="post-bottom-inside"> <div class="post-info"><span class="likes"><i class="material-icons">thumb_up</i> <span id="'+tmp[0].id+'-likes"> </span> </span> <span><span id="'+tmp[0].id+'-commentNum"> </span></span></div> <div class="post-actions"> <i style="color:transparent;">.</i><a href="#" style="float:left;"><i class="material-icons">thumb_up_alt</i> <small style="vertical-align:middle;"> Like</small></a><a href="#" style="float:right;"><i class="material-icons">comment</i> <small style="vertical-align:middle;"> Comment</small></a> </div> </div> <div class="post-comment-sec"> <span id="'+tmp[0].id+'-comments"></span> <div class="post-comment"> <div class="fb-card-comments"> <img class="fb-user-comment" src="https://benworld.net/protected/u/enzo-pfp-sm.jpg"> <input class="fb-card-input" placeholder="Write a comment"> <div class="fb-card-input-icons"> </div> </div> </div> </div>  </div> </div>';
     document.getElementById("timeline").innerHTML += post;
     updatePost(tmp[0].id, tmp[0].username);
 }
@@ -620,6 +670,9 @@ function getComments(postid){
                 document.getElementById(postid+"-commentNum").innerHTML = tmp.length+' Comment';
             }else{
                 document.getElementById(postid+"-commentNum").innerHTML = tmp.length+' Comments';
+            }
+            for(var i=1; i < tmp.length+1; i++){
+                document.getElementById(postid+"-comments").innerHTML = ' <div class="post-comment"> <a href="#"><img class="profile-img" src="//benworld.net//protected/u/blank.png"></a> <span class="comment-text"><a class="comment-name">Yeet</a> Another comment boi</span><span class="time">1 min</span> </div><div class="sp"></div>';
             }
         }
     };
