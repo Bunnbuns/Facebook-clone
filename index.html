@@ -35,6 +35,13 @@ a {
 i.material-icons{
     vertical-align:middle;
 }
+.fill-in-space{
+    color:transparent;
+    align-items: center;
+    display: flex;
+    flex-grow: 1;
+    overflow: hidden;
+}
 /* Navbar */
 nav{
     z-index: 100000;
@@ -438,7 +445,7 @@ nav .nav .title{
 			</div>
 		</div>
     <div class="new-post-actions">
-        <span style="color:transparent;align-items: center; display: flex; flex-grow: 1; overflow: hidden;">.</span>
+        <span class="fill-in-space">.</span>
         <button class="fb-btn">Post</button>
     </div>
 </div>
@@ -452,7 +459,7 @@ nav .nav .title{
       </div>
     <div class="post-bottom">
         <div class="post-bottom-inside">
-            <div class="post-info"><span class="likes"><i class="material-icons">thumb_up</i> <span id="likes"></span> Likes</span> <span>1 Comment</span></div>
+            <div class="post-info"><span class="likes"><i class="material-icons">thumb_up</i> <span id="likes"></span> Likes</span> <span><span id="commentNum"></span> Comments</span></div>
             <div class="post-actions">
                 <i style="color:transparent;">.</i><a href="#" style="float:left;"><i class="material-icons">thumb_up_alt</i> <small style="vertical-align:middle;"> Like</small></a><a href="#" style="float:right;"><i class="material-icons">comment</i> <small style="vertical-align:middle;"> Comment</small></a>
             </div>
@@ -506,6 +513,18 @@ xhttpLikes.onreadystatechange = function() {
 };
 xhttpLikes.open("GET", "https://dev.benworld.net/api/get.post.likes.php?postid=1", true);
 xhttpLikes.send();
+// - Get comments and fill in post - //
+var xhttpComments = new XMLHttpRequest();
+xhttpComments.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+       // Request is complete
+       var tmp = JSON.parse(xhttpComments.responseText);
+       console.log(tmp.length);
+       document.getElementById("commentNum").innerHTML = tmp.length;
+    }
+};
+xhttpComments.open("GET", "https://dev.benworld.net/api/get.post.comments.php?postid=1", true);
+xhttpComments.send();
 
 // --- Functions ---- //
 function formatDateTime(date){
