@@ -536,6 +536,7 @@ xhttpComments.send();
 */
 // -------------- //
 var postCount;
+// --- Functions ---- //
 // -- Get all posts -- //
 function getAllPosts(){
     // Make request //
@@ -569,22 +570,23 @@ function putPost(postid){
     document.getElementById("loading-posts").style.display ="none";
     var timeline = document.getElementById("timeline");
     var tmp = JSON.parse(this.responseText);
-    post = '<div class="post" id="'+tmp[0].id+'"> <div class="post-top"><a href="#"><img class="profile-img" src="https://benworld.net/protected/u/enzo-pfp-sm.jpg"></a><div class="inline-block"><a class="has-text-weight-semibold name" href="#"><span id="'+tmp[0].id+'-name">@'+tmp[0].username+'</span></a><span class="time">'+formatDateTime(sqlToJsDate(tmp[0]['date']))+'<small><span id="date"></span></small> · <i class="material-icons listed-icon">public</i></span></div> </div> <span class="hr"></span> <div class="post-content"> <h4 id="content">'+tmp[0].content+'</h4> </div> <div class="post-bottom"> <div class="post-bottom-inside"> <div class="post-info"><span class="likes"><i class="material-icons">thumb_up</i> <span id="'+tmp[0].id+'-likes"></span> Likes</span> <span><span id="'+tmp[0].id+'-commentNum"></span> Comments</span></div> <div class="post-actions"> <i style="color:transparent;">.</i><a href="#" style="float:left;"><i class="material-icons">thumb_up_alt</i> <small style="vertical-align:middle;"> Like</small></a><a href="#" style="float:right;"><i class="material-icons">comment</i> <small style="vertical-align:middle;"> Comment</small></a> </div> </div> <div class="post-comment-sec"> <div style="max-width: 85%"> <div class="post-comment"> <a href="#"><img class="profile-img" src="//benworld.net/protected/u/1.png"></a> <div class="comment-text"><a class="comment-name">Ben Border</a> This is a comment</div><span class="time">1 day</span> </div> <div class="post-comment"> <a href="#"><img class="profile-img" src="//benworld.net//protected/u/blank.png"></a> <span class="comment-text"><a class="comment-name">Person</a> Another comment boi</span><span class="time">1 day</span> </div> <i class="material-icons reply-icon">subdirectory_arrow_right</i><div class="post-comment reply"> <a href="#"><img class="profile-img" src="//benworld.net//protected/u/1.png"></a> <span class="comment-text"><a class="comment-name">Ben Border</a> This is a reply to a comment</span><span class="time">2 min</span> </div> <div class="post-comment"> <a href="#"><img class="profile-img" src="//benworld.net//protected/u/blank.png"></a> <span class="comment-text"><a class="comment-name">Yeet</a> Another comment boi</span><span class="time">1 min</span> </div> </div> </div> </div> </div>';
+    post = '<div class="post" id="'+tmp[0].id+'"> <div class="post-top"><a href="#"><img class="profile-img" src="https://benworld.net/protected/u/enzo-pfp-sm.jpg"></a><div class="inline-block"><a class="has-text-weight-semibold name" href="#"><span id="'+tmp[0].id+'-name">@'+tmp[0].username+'</span></a><span class="time">'+formatDateTime(sqlToJsDate(tmp[0]['date']))+'<small><span id="date"></span></small> · <i class="material-icons listed-icon">public</i></span></div> </div> <span class="hr"></span> <div class="post-content"> <h4 id="content">'+tmp[0].content+'</h4> </div> <div class="post-bottom"> <div class="post-bottom-inside"> <div class="post-info"><span class="likes"><i class="material-icons">thumb_up</i> <span id="'+tmp[0].id+'-likes">? Likes</span> </span> <span><span id="'+tmp[0].id+'-commentNum">? Comments</span></span></div> <div class="post-actions"> <i style="color:transparent;">.</i><a href="#" style="float:left;"><i class="material-icons">thumb_up_alt</i> <small style="vertical-align:middle;"> Like</small></a><a href="#" style="float:right;"><i class="material-icons">comment</i> <small style="vertical-align:middle;"> Comment</small></a> </div> </div> <div class="post-comment-sec"> <div style="max-width: 85%"> <div class="post-comment"> <a href="#"><img class="profile-img" src="//benworld.net/protected/u/1.png"></a> <div class="comment-text"><a class="comment-name">Ben Border</a> This is a comment</div><span class="time">1 day</span> </div> <div class="post-comment"> <a href="#"><img class="profile-img" src="//benworld.net//protected/u/blank.png"></a> <span class="comment-text"><a class="comment-name">Person</a> Another comment boi</span><span class="time">1 day</span> </div> <i class="material-icons reply-icon">subdirectory_arrow_right</i><div class="post-comment reply"> <a href="#"><img class="profile-img" src="//benworld.net//protected/u/1.png"></a> <span class="comment-text"><a class="comment-name">Ben Border</a> This is a reply to a comment</span><span class="time">2 min</span> </div> <div class="post-comment"> <a href="#"><img class="profile-img" src="//benworld.net//protected/u/blank.png"></a> <span class="comment-text"><a class="comment-name">Yeet</a> Another comment boi</span><span class="time">1 min</span> </div> </div> </div> </div> </div>';
     document.getElementById("timeline").innerHTML += post;
-    getNameFromUsername(tmp[0].username, tmp[0].id);
-    getLikes(tmp[0].id);
-    getComments(tmp[0].id);
+    updatePost(tmp[0].id, tmp[0].username);
 }
-// --- Functions ---- //
+function updatePost(postid, username){
+    getNameFromUsername(username, postid);
+    getLikes(postid);
+    getComments(postid);
+}
 // - Gets name from username - //
 function getNameFromUsername(username, postid){
-    var element = document.getElementById(postid+"-name");
     var xhttpName = new XMLHttpRequest();
     xhttpName.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             // Request is complete //
             var tmp = JSON.parse(xhttpName.responseText);
-            element.innerHTML = tmp[0]['name'];
+            document.getElementById(postid+"-name").innerHTML = tmp[0]['name'];
         }
     };
     xhttpName.open("GET", "https://dev.benworld.net/api/get.name.php?username="+username, true);
@@ -592,14 +594,16 @@ function getNameFromUsername(username, postid){
 }
 // - Get likes from postid - //
 function getLikes(postid){
-    var element = document.getElementById(postid+"-likes");
-    element.innerHTML = "";
     var xhttpLikes = new XMLHttpRequest();
     xhttpLikes.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             // Request is complete //
             var tmp = JSON.parse(xhttpLikes.responseText);
-            element.innerHTML = tmp.length;
+            if(tmp.length == '1'){
+                document.getElementById(postid+"-likes").innerHTML = tmp.length+' Like';
+            }else{
+                document.getElementById(postid+"-likes").innerHTML = tmp.length+' Likes';
+            }
         }
     };
     xhttpLikes.open("GET", "https://dev.benworld.net/api/get.post.likes.php?postid="+postid, true);
@@ -607,14 +611,16 @@ function getLikes(postid){
 }
 // - Get comments from postid - //
 function getComments(postid){
-    var element = document.getElementById(postid+"-commentNum");
-    element.innerHTML = "";
     var xhttpComments = new XMLHttpRequest();
     xhttpComments.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             // Request is complete //
             var tmp = JSON.parse(xhttpComments.responseText);
-            element.innerHTML = tmp.length;
+            if(tmp.length == '1'){
+                document.getElementById(postid+"-commentNum").innerHTML = tmp.length+' Comment';
+            }else{
+                document.getElementById(postid+"-commentNum").innerHTML = tmp.length+' Comments';
+            }
         }
     };
     xhttpComments.open("GET", "https://dev.benworld.net/api/get.post.comments.php?postid="+postid, true);
