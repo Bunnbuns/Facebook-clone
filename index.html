@@ -291,6 +291,7 @@ i.material-icons{
 	display: flex;
     height: 72px;
     margin: 0 auto;
+    width: 100%;
     margin-left: 1rem;
     margin-top: .5rem;
 }
@@ -309,6 +310,7 @@ i.material-icons{
 	margin: 17px 10px;
 }
 .content-status .content-status-input {
+    width: 680px;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, '.SFNSText-Regular', sans-serif;
 	border: none;
 	outline: none;
@@ -323,6 +325,48 @@ i.material-icons{
     display: flex;
     resize: none;
 }
+/* Media stuff */
+@media screen and (max-width: 765px){
+    .content-status .content-status-input {
+        width: 600px;
+    }
+}
+@media screen and (max-width: 685px){
+    .content-status .content-status-input {
+        width: 550px;
+    }
+}
+@media screen and (max-width: 635px){
+    .content-status .content-status-input {
+        width: 450px;
+    }
+}
+@media screen and (max-width: 535px){
+    .content-status .content-status-input {
+        width: 350px;
+    }
+}
+@media screen and (max-width: 435px){
+    .content-status .content-status-input {
+        width: 300px;
+    }
+}
+@media screen and (max-width: 385px){
+    .content-status .content-status-input {
+        width: 250px;
+    }
+}
+@media screen and (max-width: 335px){
+    .content-status .content-status-input {
+        width: 230px;
+    }
+}
+@media screen and (max-width: 300px){
+    .content-status .content-status-input {
+        width: auto;
+    }
+}
+/* --- */
 </style>
 </head>
 <body>
