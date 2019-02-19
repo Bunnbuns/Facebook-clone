@@ -355,7 +355,6 @@ nav .nav .title{
 	display: flex;
     height: 72px;
     margin: 0 auto;
-    width: 100%;
     overflow: hidden;
     margin-left: 1rem;
     margin-top: .5rem;
@@ -442,7 +441,7 @@ fb-user-comment::after{
 }
 #loading-posts img{
     display: block;
-    margin:0 auto;
+    margin:0 auto .75rem auto;
     height:50px;
 }
 /* Media stuff */
@@ -642,7 +641,6 @@ function getPost(postid){
 }
 function putPost(){
     // Request is complete //
-    document.getElementById("loading-posts").style.display ="none";
     var timeline = document.getElementById("timeline");
     var tmp = JSON.parse(this.responseText);
     post = '<div class="post" id="'+tmp[0].id+'"> <div class="post-top"><a href="#"><img class="profile-img" src="https://benworld.net/protected/u/enzo-pfp-sm.jpg"></a><div class="inline-block"><a class="has-text-weight-semibold name" href="#"><span id="'+tmp[0].id+'-name">@'+tmp[0].username+'</span></a><span class="time">'+formatDateTime(sqlToJsDate(tmp[0]['date']))+'<small><span id="date"></span><b> · </b></small><i class="material-icons listed-icon">public</i></span></div> </div> <span class="hr"></span> <div class="post-content"> <h4 id="content">'+tmp[0].content+'</h4> </div> <div class="post-bottom"> <div class="post-bottom-inside"> <div class="post-info"><span class="likes"><i class="material-icons">thumb_up</i> <span id="'+tmp[0].id+'-likes"> </span> </span> <span><span id="'+tmp[0].id+'-commentNum"> </span></span></div> <div class="post-actions"> <i style="color:transparent;">.</i><a href="#" style="float:left;"><i class="material-icons">thumb_up_alt</i> <small style="vertical-align:middle;"> Like</small></a><a href="#" style="float:right;"><i class="material-icons">comment</i> <small style="vertical-align:middle;"> Comment</small></a> </div> </div> <div class="post-comment-sec"> <span id="'+tmp[0].id+'-comments"></span> <div class="post-comment"> <div class="fb-card-comments"> <img class="fb-user-comment" src="https://benworld.net/protected/u/enzo-pfp-sm.jpg"> <input class="fb-card-input" placeholder="Write a comment"> <div class="fb-card-input-icons"> </div> </div> </div> </div>  </div> </div>';
@@ -660,6 +658,7 @@ function getNameFromUsername(username, postid){
     xhttpName.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             // Request is complete //
+            document.getElementById("loading-posts").style.display ="none";
             var tmp = JSON.parse(xhttpName.responseText);
             document.getElementById(postid+"-name").innerHTML = tmp[0]['name'];
         }
