@@ -356,6 +356,7 @@ nav .nav .title{
     height: 72px;
     margin: 0 auto;
     width: 100%;
+    overflow: hidden;
     margin-left: 1rem;
     margin-top: .5rem;
 }
@@ -395,7 +396,6 @@ nav .nav .title{
     display: flex;
     position: relative;
     margin-top: .5rem;
-    width:100%;
 }
 .fb-user-comment {
     width: 32px;
@@ -434,6 +434,16 @@ fb-user-comment::after{
     top: 8px;
     right: 10px;
     color: #61676f;
+}
+/* --- */
+#loading-posts{
+    display:block;
+    max-width: 750px;
+}
+#loading-posts img{
+    display: block;
+    margin:0 auto;
+    height:50px;
 }
 /* Media stuff */
 @media screen and (max-width: 1010px){
@@ -550,7 +560,7 @@ fb-user-comment::after{
         
     </div>
 </div>-->
-<div id="loading-posts">Loading...</div>
+<div id="loading-posts"><img src="images/fb-loading.svg"></div>
 <div id="timeline">
     
 </div>
