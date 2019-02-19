@@ -497,7 +497,7 @@ xhttpPost.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
        // Request is complete
        var tmp = JSON.parse(xhttpPost.responseText);
-        document.getElementById("name").innerHTML = "Loading...";
+        document.getElementById("name").innerHTML = tmp[0].username;
         var username = tmp[0]['username'];
         // - Get name from username - //
         var xhttpName = new XMLHttpRequest();
