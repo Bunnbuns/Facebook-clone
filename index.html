@@ -451,7 +451,7 @@ nav .nav .title{
 </div>
 
 <div class="post">
-      <div class="post-top"><a href="#"><img class="profile-img" src="https://benworld.net/protected/u/enzo-pfp-sm.jpg"></a><div class="inline-block"><a class="has-text-weight-semibold name" href="#"><span id="username"></span></a><span class="time"><small><span id="date"></span></small> · <i class="material-icons listed-icon">public</i></span></div>
+      <div class="post-top"><a href="#"><img class="profile-img" src="https://benworld.net/protected/u/enzo-pfp-sm.jpg"></a><div class="inline-block"><a class="has-text-weight-semibold name" href="#"><span id="name"></span></a><span class="time"><small><span id="date"></span></small> · <i class="material-icons listed-icon">public</i></span></div>
     </div>
     <span class="hr"></span>
       <div class="post-content">
@@ -494,7 +494,7 @@ xhttpPost.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
        // Request is complete
        var tmp = JSON.parse(xhttpPost.responseText);
-       document.getElementById("username").innerHTML = tmp[0]['username'];
+       document.getElementById("name").innerHTML = tmp[0]['name'];
        document.getElementById("content").innerHTML = tmp[0]['content'];
        document.getElementById("date").innerHTML = formatDateTime(sqlToJsDate(tmp[0]['date']));
     }
@@ -507,7 +507,6 @@ xhttpLikes.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
        // Request is complete
        var tmp = JSON.parse(xhttpLikes.responseText);
-       console.log(tmp.length);
        document.getElementById("likes").innerHTML = tmp.length;
     }
 };
