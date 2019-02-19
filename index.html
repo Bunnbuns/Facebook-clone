@@ -486,6 +486,9 @@ nav .nav .title{
             </div>  
     </div>
 </div>
+<div id="timeline">
+    
+</div>
 <!-- End .body --></div>
 <script>
 // - Get post json and fill in post - //
@@ -494,12 +497,25 @@ xhttpPost.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
        // Request is complete
        var tmp = JSON.parse(xhttpPost.responseText);
-       document.getElementById("name").innerHTML = tmp[0]['name'];
+        document.getElementById("name").innerHTML = "Loading...";
+        var username = tmp[0]['username'];
+        // - Get name from username - //
+        var xhttpName = new XMLHttpRequest();
+        xhttpName.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+               // Request is complete
+               var tmp = JSON.parse(xhttpName.responseText);
+                document.getElementById("name").innerHTML = tmp[0]['name'];
+                }
+            };
+            xhttpName.open("GET", "https://dev.benworld.net/api/get.name.php?username="+username, true);
+            xhttpName.send();
+       //document.getElementById("name").innerHTML = tmp[0]['name'];
        document.getElementById("content").innerHTML = tmp[0]['content'];
        document.getElementById("date").innerHTML = formatDateTime(sqlToJsDate(tmp[0]['date']));
     }
 };
-xhttpPost.open("GET", "https://dev.benworld.net/api/get.post.php?id=1", true);
+xhttpPost.open("GET", "https://dev.benworld.net/api/get.post.php?id=2", true);
 xhttpPost.send();
 // - Get likes and fill in post - //
 var xhttpLikes = new XMLHttpRequest();
@@ -510,7 +526,7 @@ xhttpLikes.onreadystatechange = function() {
        document.getElementById("likes").innerHTML = tmp.length;
     }
 };
-xhttpLikes.open("GET", "https://dev.benworld.net/api/get.post.likes.php?postid=1", true);
+xhttpLikes.open("GET", "https://dev.benworld.net/api/get.post.likes.php?postid=2", true);
 xhttpLikes.send();
 // - Get comments and fill in post - //
 var xhttpComments = new XMLHttpRequest();
@@ -518,12 +534,12 @@ xhttpComments.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
        // Request is complete
        var tmp = JSON.parse(xhttpComments.responseText);
-       console.log(tmp.length);
        document.getElementById("commentNum").innerHTML = tmp.length;
     }
 };
-xhttpComments.open("GET", "https://dev.benworld.net/api/get.post.comments.php?postid=1", true);
+xhttpComments.open("GET", "https://dev.benworld.net/api/get.post.comments.php?postid=2", true);
 xhttpComments.send();
+
 
 // --- Functions ---- //
 function formatDateTime(date){
