@@ -497,8 +497,8 @@ xhttpPost.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
        // Request is complete
        var tmp = JSON.parse(xhttpPost.responseText);
-        document.getElementById("name").innerHTML = tmp[0].username;
-        var username = tmp[0]['username'];
+        var username = tmp[0].username;
+        document.getElementById("name").innerHTML = "@"+username;
         // - Get name from username - //
         var xhttpName = new XMLHttpRequest();
         xhttpName.onreadystatechange = function() {
@@ -515,7 +515,7 @@ xhttpPost.onreadystatechange = function() {
        document.getElementById("date").innerHTML = formatDateTime(sqlToJsDate(tmp[0]['date']));
     }
 };
-xhttpPost.open("GET", "https://dev.benworld.net/api/get.post.php?id=2", true);
+xhttpPost.open("GET", "https://dev.benworld.net/api/get.post.php?id=1", true);
 xhttpPost.send();
 // - Get likes and fill in post - //
 var xhttpLikes = new XMLHttpRequest();
@@ -526,7 +526,7 @@ xhttpLikes.onreadystatechange = function() {
        document.getElementById("likes").innerHTML = tmp.length;
     }
 };
-xhttpLikes.open("GET", "https://dev.benworld.net/api/get.post.likes.php?postid=2", true);
+xhttpLikes.open("GET", "https://dev.benworld.net/api/get.post.likes.php?postid=1", true);
 xhttpLikes.send();
 // - Get comments and fill in post - //
 var xhttpComments = new XMLHttpRequest();
@@ -537,9 +537,14 @@ xhttpComments.onreadystatechange = function() {
        document.getElementById("commentNum").innerHTML = tmp.length;
     }
 };
-xhttpComments.open("GET", "https://dev.benworld.net/api/get.post.comments.php?postid=2", true);
+xhttpComments.open("GET", "https://dev.benworld.net/api/get.post.comments.php?postid=1", true);
 xhttpComments.send();
 
+// -- Get per post -- //
+function getPostes(){
+    var timeline = document.getElementById("timeline").innerHTML;
+    
+}
 
 // --- Functions ---- //
 function formatDateTime(date){
