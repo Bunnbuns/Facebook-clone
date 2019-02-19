@@ -131,7 +131,7 @@ nav .nav .title{
     font-weight:600;
     vertical-align:middle;
     margin-left:.25rem;
-    line-height: 1.5;
+    line-height: 1.75;
 }
 .post-top .time{
     margin-left:.25rem;
@@ -142,9 +142,23 @@ nav .nav .title{
     vertical-align: middle;
     display: block;
 }
+.post-top .time b{
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+    color: #616770;
+    line-height: 1.5;
+    margin:0 3px;
+}
 .listed-icon{
-    font-size:13px !important;
+    vertical-align: middle;
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+    font-size:12px !important;
     color:#616770;
+    line-height: 1.5;
+    padding: 3px 0;
 }
 .post-content{
     margin-top: 6px;
@@ -313,6 +327,7 @@ nav .nav .title{
     padding:5px 4px 5px 4px;
     vertical-align: middle;
     display: inline-block;
+    font-size: 88%;
     color:#a5a5a5;
 }
 .sp{
@@ -505,7 +520,7 @@ fb-user-comment::after{
 </div>
 
 <!--<div class="post">
-      <div class="post-top"><a href="#"><img class="profile-img" src="https://benworld.net/protected/u/enzo-pfp-sm.jpg"></a><div class="inline-block"><a class="has-text-weight-semibold name" href="#"><span id="name"></span></a><span class="time"><span id="date"></span> · <i class="material-icons listed-icon">public</i></span></div>
+      <div class="post-top"><a href="#"><img class="profile-img" src="https://benworld.net/protected/u/enzo-pfp-sm.jpg"></a><div class="inline-block"><a class="has-text-weight-semibold name" href="#"><span id="name"></span></a><span class="time"><span id="date"> · </span><i class="material-icons listed-icon">public</i></span></div>
     </div>
     <span class="hr"></span>
       <div class="post-content">
@@ -620,7 +635,7 @@ function putPost(){
     document.getElementById("loading-posts").style.display ="none";
     var timeline = document.getElementById("timeline");
     var tmp = JSON.parse(this.responseText);
-    post = '<div class="post" id="'+tmp[0].id+'"> <div class="post-top"><a href="#"><img class="profile-img" src="https://benworld.net/protected/u/enzo-pfp-sm.jpg"></a><div class="inline-block"><a class="has-text-weight-semibold name" href="#"><span id="'+tmp[0].id+'-name">@'+tmp[0].username+'</span></a><span class="time">'+formatDateTime(sqlToJsDate(tmp[0]['date']))+'<small><span id="date"></span></small> · <i class="material-icons listed-icon">public</i></span></div> </div> <span class="hr"></span> <div class="post-content"> <h4 id="content">'+tmp[0].content+'</h4> </div> <div class="post-bottom"> <div class="post-bottom-inside"> <div class="post-info"><span class="likes"><i class="material-icons">thumb_up</i> <span id="'+tmp[0].id+'-likes"> </span> </span> <span><span id="'+tmp[0].id+'-commentNum"> </span></span></div> <div class="post-actions"> <i style="color:transparent;">.</i><a href="#" style="float:left;"><i class="material-icons">thumb_up_alt</i> <small style="vertical-align:middle;"> Like</small></a><a href="#" style="float:right;"><i class="material-icons">comment</i> <small style="vertical-align:middle;"> Comment</small></a> </div> </div> <div class="post-comment-sec"> <span id="'+tmp[0].id+'-comments"></span> <div class="post-comment"> <div class="fb-card-comments"> <img class="fb-user-comment" src="https://benworld.net/protected/u/enzo-pfp-sm.jpg"> <input class="fb-card-input" placeholder="Write a comment"> <div class="fb-card-input-icons"> </div> </div> </div> </div>  </div> </div>';
+    post = '<div class="post" id="'+tmp[0].id+'"> <div class="post-top"><a href="#"><img class="profile-img" src="https://benworld.net/protected/u/enzo-pfp-sm.jpg"></a><div class="inline-block"><a class="has-text-weight-semibold name" href="#"><span id="'+tmp[0].id+'-name">@'+tmp[0].username+'</span></a><span class="time">'+formatDateTime(sqlToJsDate(tmp[0]['date']))+'<small><span id="date"></span><b> · </b></small><i class="material-icons listed-icon">public</i></span></div> </div> <span class="hr"></span> <div class="post-content"> <h4 id="content">'+tmp[0].content+'</h4> </div> <div class="post-bottom"> <div class="post-bottom-inside"> <div class="post-info"><span class="likes"><i class="material-icons">thumb_up</i> <span id="'+tmp[0].id+'-likes"> </span> </span> <span><span id="'+tmp[0].id+'-commentNum"> </span></span></div> <div class="post-actions"> <i style="color:transparent;">.</i><a href="#" style="float:left;"><i class="material-icons">thumb_up_alt</i> <small style="vertical-align:middle;"> Like</small></a><a href="#" style="float:right;"><i class="material-icons">comment</i> <small style="vertical-align:middle;"> Comment</small></a> </div> </div> <div class="post-comment-sec"> <span id="'+tmp[0].id+'-comments"></span> <div class="post-comment"> <div class="fb-card-comments"> <img class="fb-user-comment" src="https://benworld.net/protected/u/enzo-pfp-sm.jpg"> <input class="fb-card-input" placeholder="Write a comment"> <div class="fb-card-input-icons"> </div> </div> </div> </div>  </div> </div>';
     document.getElementById("timeline").innerHTML += post;
     updatePost(tmp[0].id, tmp[0].username);
 }
