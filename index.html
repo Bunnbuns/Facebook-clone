@@ -687,6 +687,19 @@ function postLikes(postid){
     xhttpLikes.open("GET", "https://dev.benworld.net/api/get.post.likes.php?postid="+postid, true);
     xhttpLikes.send();
 }
+// - Gets pfp from username - //
+function setPfp(username){
+    var xhttpName = new XMLHttpRequest();
+    xhttpName.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            // Request is complete //
+            var tmp = JSON.parse(xhttpName.responseText);
+            document.getElementsByClassName(username+"-pfp").src = 'https://benworld.net/protected/u/'+tmp[0]['profile_pic'];
+        }
+    };
+    xhttpName.open("GET", "https://dev.benworld.net/api/get.name.php?username="+username, true);
+    xhttpName.send();
+}
 // - Get comments from postid - //
 function postComments(postid){
     var xhttpComments = new XMLHttpRequest();
@@ -701,7 +714,8 @@ function postComments(postid){
             }
             if(tmp.length > 0){
                 for(var i=0; i < tmp.length+1; i++){
-                    document.getElementById(postid+"-comments").innerHTML += '<div class="post-comment"> <a href="#"><img class="profile-img" src="//benworld.net/protected/u/default.png"></a> <span class="comment-text"><a class="comment-name">'+tmp[i].username+'</a> '+tmp[i].content+'</span><span class="time">1 min</span> </div><div class="sp"></div>';
+                    document.getElementById(postid+"-comments").innerHTML += '<div class="post-comment"> <a href="#"><img class="'+tmp[0].username+'-pfp profile-img" src="//benworld.net/protected/u/default.png"></a> <span class="comment-text"><a href="#" class="comment-name">'+tmp[i].username+'</a> '+tmp[i].content+'</span><span class="time">1 min</span> </div><div class="sp"></div>';
+                    setPfp(tmp[i].username);
                 }
             }
         }
