@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Facebook Clone</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<style>
+/* --- Basic things --- */
+body{
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, '.SFNSText-Regular', sans-serif;
+  background-color: #e9ebee;
+  color: #1d2129;
+  margin: 0;
+}
+a {
+    color: #365899;
+    cursor: pointer;
+    text-decoration: none;
+}
+img {
+    border: 0;
+}
+.clearfix:after {
+    clear: both;
+    content: ".";
+    display: block;
+    font-size: 0;
+    height: 0;
+    line-height: 0;
+    visibility: hidden;
+}
+/* - End Basic things - */
+.inline-block{
+    display: inline-block;
+    vertical-align: middle;
+}
+i.material-icons{
+    vertical-align:middle;
+}
+.fill-in-space{
+    color:transparent;
+    align-items: center;
+    display: flex;
+    flex-grow: 1;
+    overflow: hidden;
+}
+/* Navbar */
+nav{
+    z-index: 100000;
+    display: block;
+    background-color: #4267b2;
+    border-bottom: 1px solid #29487d;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    box-sizing: border-box;
+    height: 43px;
+    width:100%;
+}
+nav .nav{
+    vertical-align: middle;
+    margin: auto 0;
+    padding: 0 8px 0 3rem;
+}
+nav .nav .title{
+    -webkit-font-smoothing: antialiased;
+    font-weight: 700;
+}
+.body{
+    margin:63px 8px 8px 3rem;
+    background-color:#e9ebee;
+}
+/* Post */
+.post{
+    background-color: #ffffff;
+    border-color: transparent;
+    border-left-width: 0;
+    border-right-width: 0;
+    position: relative;
+    max-width:750px;
+    border-radius:3px;
+    margin-bottom:1rem;
+}
+.post:before{
+    border: 1px solid #dddfe2;
+    border-radius: 4px;
+    bottom: -1px;
+    content: '';
+    left: -1px;
+    pointer-events: none;
+    position: absolute;
+    right: -1px;
+    top: -1px;
+}
+.post-header{
+    background-color: #f5f6f7;
+    border-bottom: 1px solid #dddfe2;
+    font-weight: bold;
+    padding: 5px 6px 8px 6px;
+    border-radius:3px 3px 0 0;
+}
+.post-header span{
+    color: #4b4f56;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 14px;
+}
+/* pfp */
+.profile-img{
+  vertical-align:middle;
+  border-radius:50%;
+}
+.post-top .profile-img{
+	border: 1px solid rgba(0, 0, 0, .1);
+  	margin-right:.25rem;
+  	max-width:2.5rem;
+}
+/* Post top */
+.post-top i{
+	vertical-align:middle;
+}
+.post-top{
+  	padding:12px 0 1rem 12px;
+}
+.post-top .name{
+	font-size:14px;
+    font-weight:600;
+    vertical-align:middle;
+    margin-left:.25rem;
+    line-height: 1.75;
+}
+.post-top .time{
+    margin-left:.25rem;
+    margin-top:-.25rem;
+    font-size: 12px;
+    line-height: 1.5;
+    color:#616770;
+    vertical-align: middle;
+    display: block;
+}
+.post-top .time b{
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+    color: #616770;
+    line-height: 1.5;
+    margin:0 3px;
+}
+.listed-icon{
+    vertical-align: middle;
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+    font-size:12px !important;
+    color:#616770;
+    line-height: 1.5;
+    padding: 3px 0;
+}
+.post-content{
+    margin-top: 6px;
+    padding-bottom: 12px;
+    font-size: 16px;
+    font-weight: normal;
+    line-height: 1.38;
+}
+.post-content h2,h3,h4,h5,p{
+	padding:0 1rem;
+    margin: 0;
+}
+.post-content img{
+    margin-top:.75rem;
+}
+.post-bottom-inside{
+    background-color: #fff;
+}
+.post-info{
+    align-items: center;
+    border-bottom: 1px solid #dadde1;
+    color: #606770;
+    display: flex;
+    resize: none;
+    font-size: 13px;
+    line-height: 20px;
+    margin: 12px 12px 0 12px;
+    padding: 0 0 10px 0;
+}
+.post-info span{
+    margin:0 2px;
+}
+.post-info .likes{
+    align-items: center;
+    display: flex;
+    flex-grow: 1;
+    overflow: hidden;
+}
+.post-info i{
+    background-color:#4c88f2;
+    padding:3px;
+    border-radius: 50%;
+    color:#ffffff;
+    font-size: 10px;
+    margin-right:2px;
+}
+/* Facebook button */
+/* Credit to www.facebook.com */
+.fb-btn{
+    background-color: #4267b2;
+    border-color: #4267b2;
+    border: 0;
+    border-radius: 2px;
+    color: #fff;
+    cursor: pointer;
+    -webkit-font-smoothing: antialiased;
+    font-weight: normal;
+    font-weight: bold;
+    font-size: .75rem;
+    overflow: hidden;
+    padding: .5em 1.5em;
+    text-align: center;
+    text-overflow: ellipsis;
+    transition: 200ms cubic-bezier(.08,.52,.52,1) background-color, 200ms cubic-bezier(.08,.52,.52,1) box-shadow, 200ms cubic-bezier(.08,.52,.52,1) transform
+}
+.fb-btn:hover{
+    background-color: #365899;
+    border-color: #365899;
+}
+.fb-btn:focus{
+    background-color: #29487d;
+    border-color: #29487d;
+    outline: none
+}
+.fb-btn:active{
+    background-color: #29487d;
+    border-color: #29487d;
+    box-shadow: none;
+    transform: scale(.98);
+    outline: none
+}
+.fb-btn:active:after{
+    bottom: 0;
+    content: '';
+    left: -2%;
+    position: absolute;
+    right: -2%;
+    top: 0;
+    z-index: -1
+}
+/* --- */
+/* Post actions */
+.post-actions{
+    margin:.5rem .75rem 1.25rem .75rem;
+    display: block;
+}
+.post-actions a {
+  color:hsl(0, 0%, 40%) !important;
+  margin:0 .25rem;
+  padding:3px 7px;
+  text-decoration: none;
+  -webkit-transition: background-color .2s;
+  transition: background-color .2s;
+}
+.post-actions a:hover {
+  color:hsl(0, 0%, 30%) !important;
+  border-radius:5px;
+  padding:3px 7px;
+  text-decoration: none;
+  background-color:rgba(235,235,235,1);
+}
+.post-actions a:active {
+  color:hsl(0, 0%, 28%) !important;
+}
+/* Comment section */
+.post-comment-sec{
+    border-top: 1px solid #dadde1;
+    padding:.4rem 1rem .4rem 1rem;
+    border-radius:0px 0px 3px 3px;
+    font-size: 88%;
+}
+.post-comment-sec .profile-img{
+    width:32px;
+    margin-right:.25rem;
+}
+.post-comment{
+    margin-bottom:.6rem;
+    margin-top:.25rem;
+    margin-right: 1rem;
+    max-width: 100%;
+    white-space: nowrap;
+}
+.post-comment.reply{
+    display: inline-block;
+}
+.post .reply-icon{
+    margin-left:.5rem;
+    color:#a0a0a0;
+    font-size:1rem;
+    white-space: nowrap;
+    display: inline-block;
+}
+.post-comment .comment-text{
+    padding:8px 10px;
+    background-color: #f2f3f5;
+    border-radius: 18px;
+    box-sizing: border-box;
+    color: #1c1e21;
+    display: inline-block;
+    line-height: 16px;
+    margin: 0;
+    font-size: 88%;
+    max-width: 90%;
+    word-wrap: break-word;
+    position: relative;
+    white-space: normal;
+    word-break: break-word;
+}
+.comment-name{
+    color: #365899;
+    line-height: inherit;
+    font-weight: 600;
+    margin-right: 2px;
+}
+.post-comment .time{
+    padding:5px 4px 5px 4px;
+    vertical-align: middle;
+    display: inline-block;
+    font-size: 88%;
+    color:#a5a5a5;
+}
+.sp{
+    margin:1rem;
+}
+/* New post */
+/* Credit to https://codepen.io/hoanganhuynh */
+.create-status{
+	font-size: 13px;
+	width: 504px;
+	height: 158px;
+    background-color: #ffffff;
+	border: 1px solid #dddfe2;
+	border-radius: 3px;
+}
+.create-title{
+	border-bottom: 1px solid lightgray;
+	background-color: #eee;
+	height: 34px;
+	padding: 8px 8px;
+	box-sizing: border-box;
+	font-weight: 600;
+}
+.avatar-and-content-status{
+	display: flex;
+    height: 72px;
+    margin: 0 auto;
+    overflow: hidden;
+    margin-left: 1rem;
+    margin-top: .5rem;
+}
+.avatar-and-content-status .avatar-status{
+	background-image: url('https://benworld.net/protected/u/enzo-pfp-sm.jpg');
+    background-size: cover;
+    background-position: center;
+    width: 37px;
+    height: 37px;
+    border-radius: 50%;
+    margin: 9px 0px;
+}
+.avatar-and-content-status .content-status{
+	width: auto;
+	height: auto;
+	margin: 17px 10px;
+}
+.content-status .content-status-input {
+    width: 670px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, '.SFNSText-Regular', sans-serif;
+	border: none;
+	outline: none;
+    font-size: .9rem;
+    margin-top:-10px;
+    padding:10px 0 1rem 5px;
+}
+/* --- */
+.new-post-actions{
+    border-top: 1px solid #dadde1;
+    padding:.5rem .75rem .5rem 0;
+    display: flex;
+    resize: none;
+}
+/* New comment input */
+/* Credit to https://codepen.io/sofiapineda */
+.fb-card-comments {
+    display: flex;
+    position: relative;
+    margin-top: .5rem;
+}
+.fb-user-comment {
+    width: 32px;
+    vertical-align: middle;
+    height: 32px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+fb-user-comment::after{
+    border: 1px solid rgba(0, 0, 0, .1);
+    border-radius: 50%;
+    bottom: 0;
+    content: '';
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.fb-card-input {
+    padding: 8px 10px;
+    border-radius: 20px;
+    border: none;
+    vertical-align: middle;
+    background-color: #f2f3f5;
+    border: 1px solid #ccd0d5;
+    margin-left: 3px;
+    font-size: .75rem;
+    min-width: 70%;
+    width: 90%;
+}
+.fb-card-input:focus{
+    outline:none;
+}
+.fb-card-input-icons {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    color: #61676f;
+}
+/* --- */
+#loading-posts{
+    display:block;
+    max-width: 750px;
+}
+#loading-posts img{
+    display: block;
+    margin:0 auto .75rem auto;
+    height:50px;
+}
+.loading{
+    display: block;
+    height: 45px;
+    margin: 0 0 .6rem 0;
+}
+/* Media stuff */
+@media screen and (max-width: 1010px){
+    .body{
+        margin:63px 8px 8px 2rem;
+    }
+    nav .nav{
+        padding: 0 8px 0 2rem;
+    }
+}
+@media screen and (max-width: 900px){
+    .body{
+        margin:63px 8px 8px 8px;
+    }
+    nav .nav{
+        padding: 0 8px 0 8px;
+    }
+}
+@media screen and (max-width: 765px){
+    .content-status .content-status-input {
+        width: 600px;
+    }
+}
+@media screen and (max-width: 685px){
+    .content-status .content-status-input {
+        width: 550px;
+    }
+}
+@media screen and (max-width: 635px){
+    .content-status .content-status-input {
+        width: 450px;
+    }
+}
+@media screen and (max-width: 535px){
+    .content-status .content-status-input {
+        width: 350px;
+    }
+}
+@media screen and (max-width: 435px){
+    .content-status .content-status-input {
+        width: 300px;
+    }
+}
+@media screen and (max-width: 385px){
+    .content-status .content-status-input {
+        width: 250px;
+    }
+}
+@media screen and (max-width: 335px){
+    .content-status .content-status-input {
+        width: 230px;
+    }
+}
+@media screen and (max-width: 300px){
+    .content-status .content-status-input {
+        width: auto;
+    }
+}
+/* --- */
+</style>
+</head>
+<body style="min-height: 100vh;">
+<nav>
+    <div class="nav">
+        <span class="title">Facebook Clone</span>
+    </div>
+</nav>
+<div class="body">
+<div class="post">
+  <div class="post-header">
+  	<span class="pfp"></span>
+    <span>Create Post</span>
+  </div>
+		<div class="avatar-and-content-status">
+			<div class="avatar-status"></div>
+			<div class="content-status">
+				<input class="content-status-input" type="text" name="text" placeholder="What's on your mind?">
+			</div>
+		</div>
+    <div class="new-post-actions">
+        <span class="fill-in-space">.</span>
+        <button class="fb-btn">Post</button>
+    </div>
+</div>
+
+<!--<div class="post">
+      <div class="post-top"><a href="#"><img class="profile-img" src="https://benworld.net/protected/u/enzo-pfp-sm.jpg"></a><div class="inline-block"><a class="has-text-weight-semibold name" href="#"><span id="name"></span></a><span class="time"><span id="date"> · </span><i class="material-icons listed-icon">public</i></span></div>
+    </div>
+    <span class="hr"></span>
+      <div class="post-content">
+        <h4 id="content">Loading...</h4>
+      </div>
+    <div class="post-bottom">
+        <div class="post-bottom-inside">
+            <div class="post-info"><span class="likes"><i class="material-icons">thumb_up</i> <span id="likes"></span> Likes</span> <span><span id="commentNum"></span> Comments</span></div>
+            <div class="post-actions">
+                <i style="color:transparent;">.</i><a href="#" style="float:left;"><i class="material-icons">thumb_up_alt</i> <small style="vertical-align:middle;"> Like</small></a><a href="#" style="float:right;"><i class="material-icons">comment</i> <small style="vertical-align:middle;"> Comment</small></a>
+            </div>
+        </div>
+            <div class="post-comment-sec">
+                    <div class="post-comment">
+                        <a href="#"><img class="profile-img" src="//benworld.net//protected/u/blank.png"></a>
+                        <span class="comment-text"><a class="comment-name">Yeet</a> Another comment boi</span><span class="time">1 min</span>
+                    </div>
+                <div class="post-comment">
+                    <div class="fb-card-comments">
+                      <img class="fb-user-comment" src="https://benworld.net/protected/u/enzo-pfp-sm.jpg">
+                      <input class="fb-card-input" placeholder="Write a comment">
+                      <div class="fb-card-input-icons">
+                      </div>
+                    </div>
+                </div>
+            </div>
+        
+    </div>
+</div>-->
+<div id="loading-posts">
+    <!-- Credit to loading.io for image -->
+    <img src="images/fb-loading.svg">
+</div>
+<div id="timeline">
+    
+</div>
+<br />
+<!-- End .body --></div>
+<script>
+window.onload = function(){
+    getAllPosts();
+}
+/*
+// - Get post json and fill in post - //
+var xhttpPost = new XMLHttpRequest();
+xhttpPost.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        // Request is complete //
+        var tmp = JSON.parse(xhttpPost.responseText);
+        var username = tmp[0].username;
+        document.getElementById("name").innerHTML = "@"+username;
+        document.getElementById("name").innerHTML = getNameFromUsername(username);
+        document.getElementById("content").innerHTML = tmp[0]['content'];
+        document.getElementById("date").innerHTML = formatDateTime(sqlToJsDate(tmp[0]['date']));
+    }
+};
+xhttpPost.open("GET", "https://dev.benworld.net/api/get.post.php?id=1", true);
+xhttpPost.send();
+// - Get likes and fill in post - //
+var xhttpLikes = new XMLHttpRequest();
+xhttpLikes.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+       // Request is complete //
+       var tmp = JSON.parse(xhttpLikes.responseText);
+       document.getElementById("likes").innerHTML = tmp.length;
+    }
+};
+xhttpLikes.open("GET", "https://dev.benworld.net/api/get.post.likes.php?postid=1", true);
+xhttpLikes.send();
+// - Get comments and fill in post - //
+var xhttpComments = new XMLHttpRequest();
+xhttpComments.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+       // Request is complete //
+       var tmp = JSON.parse(xhttpComments.responseText);
+       document.getElementById("commentNum").innerHTML = tmp.length;
+    }
+};
+xhttpComments.open("GET", "https://dev.benworld.net/api/get.post.comments.php?postid=1", true);
+xhttpComments.send();
+*/
+// -------------- //
+var postCount;
+// --- Functions ---- //
+// -- Get all posts -- //
+function getAllPosts(){
+    // Make request //
+    var xhttpPostCount = new XMLHttpRequest(); 
+    xhttpPostCount.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            // Request is complete //
+            var timeline = document.getElementById("timeline");
+            document.getElementById("loading-posts").style.display ="";
+            var tmp = JSON.parse(this.responseText);
+            postCount = tmp.length;
+            for(var i=0; i < postCount; i++){
+                console.log('i: '+i+' | id: '+tmp[i].id);
+                post = '<div class="post" id="post-'+tmp[i].id+'"> <div class="post-top"><a href="#"><img id="pfp" class="profile-img" src="https://benworld.net/protected/u/'+tmp[i].pfp+'"></a><div class="inline-block"><a class="has-text-weight-semibold name" href="#"><span id="'+tmp[i].id+'-name">'+tmp[i].name+'</span></a><span class="time">'+formatDateTime(sqlToJsDate(tmp[i]['date']))+'<small><span id="date"></span><b> · </b></small><i class="material-icons listed-icon">public</i></span></div> </div> <span class="hr"></span> <div class="post-content"> <h4 id="content">'+tmp[i].content+'</h4> </div> <div class="post-bottom"> <div class="post-bottom-inside"> <div class="post-info"><span class="likes"><i class="material-icons">thumb_up</i> <span id="'+tmp[i].id+'-likes"> </span> </span> <span><span id="'+tmp[i].id+'-commentNum"> </span></span></div> <div class="post-actions"> <i style="color:transparent;">.</i><a href="#" style="float:left;"><i class="material-icons">thumb_up_alt</i> <small style="vertical-align:middle;"> Like</small></a><a href="#" style="float:right;"><i class="material-icons">comment</i> <small style="vertical-align:middle;"> Comment</small></a> </div> </div> <div class="post-comment-sec"> <span id="'+tmp[i].id+'-comments"><img class="loading" src="images/fb-loading.svg"></span> <div class="post-comment"> <div class="fb-card-comments"> <img class="fb-user-comment" src="https://benworld.net/protected/u/enzo-pfp-sm.jpg"> <input class="fb-card-input" placeholder="Write a comment"> <div class="fb-card-input-icons"> </div> </div> </div> </div>  </div> </div>';
+                document.getElementById("timeline").innerHTML += post;
+                updatePost(tmp[i].id);
+            }
+        }
+    };
+    xhttpPostCount.open("GET", "https://dev.benworld.net/api/fb/get.posts.php", true);
+    xhttpPostCount.send();
+}
+function updatePost(postid){
+    document.getElementById("loading-posts").style.display ="none";
+    postLikes(postid);
+    postComments(postid);
+}
+// - Get likes from postid - //
+function postLikes(postid){
+    var xhttpLikes = new XMLHttpRequest();
+    xhttpLikes.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            // Request is complete //
+            var tmp = JSON.parse(xhttpLikes.responseText);
+            if(tmp.length == '1'){
+                document.getElementById(postid+"-likes").innerHTML = tmp.length+' Like';
+            }else{
+                document.getElementById(postid+"-likes").innerHTML = tmp.length+' Likes';
+            }
+        }
+    };
+    xhttpLikes.open("GET", "https://dev.benworld.net/api/get.post.likes.php?postid="+postid, true);
+    xhttpLikes.send();
+}
+// - Get comments from postid - //
+function postComments(postid){
+    var xhttpComments = new XMLHttpRequest();
+    xhttpComments.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            // Request is complete //
+            var tmp = JSON.parse(xhttpComments.responseText);
+            if(tmp.length == '0'){
+                console.log("Com- postid= "+postid+" & tmp.="+tmp.length+' (No comments)');
+                document.getElementById(postid+"-commentNum").innerHTML = '0 Comments';
+                document.getElementById(postid+"-comments").innerHTML = "";
+            }else{
+                if(tmp.length == '1'){
+                    document.getElementById(postid+"-commentNum").innerHTML = tmp.length+' Comment';
+                }else{
+                    document.getElementById(postid+"-commentNum").innerHTML = tmp.length+' Comments';
+                }
+                console.log("Com- postid= "+postid+" & tmp.="+tmp.length);
+                    document.getElementById(postid+"-comments").innerHTML = "";
+                    for(var i=0; i < tmp.length+1; i++){
+                        document.getElementById(postid+"-comments").innerHTML += '<div class="post-comment"> <a href="#"><img class="pfp profile-img" src="//benworld.net/protected/u/'+tmp[i].pfp+'"></a> <span class="comment-text"><a href="#" class="comment-name">'+tmp[i].name+'</a> '+tmp[i].content+'</span><span class="time">1 min</span> </div><div class="sp"></div>';
+                    }
+            }
+        }
+    };
+    xhttpComments.open("GET", "https://dev.benworld.net/api/fb/get.post.comments.php?postid="+postid, true);
+    xhttpComments.send();
+}
+
+// - Formats date and time to 1/1/2019 - //
+function formatDateTime(date){
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var ampm = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  minutes = minutes < 10 ? '0'+minutes : minutes;
+  var strTime = hours + ':' + minutes + ' ' + ampm;
+  return date.getMonth()+1 + "/" + date.getDate() + "/" + date.getFullYear() + "  " + strTime;
+}
+function sqlToJsDate(sqlDate){
+//turns sql date from table to javascript format
+//author: https://deepinthecode.com/2014/08/05/converting-a-sql-datetime-to-a-javascript-date/
+    //sqlDate in SQL DATETIME format ("yyyy-mm-dd hh:mm:ss.ms")
+    var sqlDateArr1 = sqlDate.split("-");
+    //format of sqlDateArr1[] = ['yyyy','mm','dd hh:mm:ms']
+    var sYear = sqlDateArr1[0];
+    var sMonth = (Number(sqlDateArr1[1]) - 1).toString();
+    var sqlDateArr2 = sqlDateArr1[2].split(" ");
+    //format of sqlDateArr2[] = ['dd', 'hh:mm:ss.ms']
+    var sDay = sqlDateArr2[0];
+    var sqlDateArr3 = sqlDateArr2[1].split(":");
+    //format of sqlDateArr3[] = ['hh','mm','ss.ms']
+    var sHour = sqlDateArr3[0];
+    var sMinute = sqlDateArr3[1];
+    var sqlDateArr4 = sqlDateArr3[2].split(".");
+    //format of sqlDateArr4[] = ['ss','ms']
+    var sSecond = sqlDateArr4[0];
+    
+    return new Date(sYear,sMonth,sDay,sHour,sMinute,sSecond);
+}
+</script>
+</body>
+</html>
