@@ -444,6 +444,11 @@ fb-user-comment::after{
     margin:0 auto .75rem auto;
     height:50px;
 }
+.loading{
+    display: block;
+    height: 45px;
+    margin: 0 0 .6rem 0;
+}
 /* Media stuff */
 @media screen and (max-width: 1010px){
     .body{
@@ -519,16 +524,16 @@ fb-user-comment::after{
 		<div class="avatar-and-content-status">
 			<div class="avatar-status"></div>
 			<div class="content-status">
-				<input class="content-status-input" type="text" name="text" placeholder="What's on your mind?">
+				<input class="content-status-input" type="text" name="post-content" id="post-input" placeholder="What's on your mind?">
 			</div>
 		</div>
     <div class="new-post-actions">
         <span class="fill-in-space">.</span>
-        <button class="fb-btn">Post</button>
+        <button class="fb-btn" id="submit-post" onclick="newPost()">Post</button>
     </div>
 </div>
-
-<!--<div class="post">
+<!-- Template --
+    <div class="post">
       <div class="post-top"><a href="#"><img class="profile-img" src="https://benworld.net/protected/u/enzo-pfp-sm.jpg"></a><div class="inline-block"><a class="has-text-weight-semibold name" href="#"><span id="name"></span></a><span class="time"><span id="date"> · </span><i class="material-icons listed-icon">public</i></span></div>
     </div>
     <span class="hr"></span>
@@ -572,48 +577,26 @@ fb-user-comment::after{
 window.onload = function(){
     getAllPosts();
 }
-/*
-// - Get post json and fill in post - //
-var xhttpPost = new XMLHttpRequest();
-xhttpPost.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-        // Request is complete //
-        var tmp = JSON.parse(xhttpPost.responseText);
-        var username = tmp[0].username;
-        document.getElementById("name").innerHTML = "@"+username;
-        document.getElementById("name").innerHTML = getNameFromUsername(username);
-        document.getElementById("content").innerHTML = tmp[0]['content'];
-        document.getElementById("date").innerHTML = formatDateTime(sqlToJsDate(tmp[0]['date']));
-    }
-};
-xhttpPost.open("GET", "https://dev.benworld.net/api/get.post.php?id=1", true);
-xhttpPost.send();
-// - Get likes and fill in post - //
-var xhttpLikes = new XMLHttpRequest();
-xhttpLikes.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-       // Request is complete //
-       var tmp = JSON.parse(xhttpLikes.responseText);
-       document.getElementById("likes").innerHTML = tmp.length;
-    }
-};
-xhttpLikes.open("GET", "https://dev.benworld.net/api/get.post.likes.php?postid=1", true);
-xhttpLikes.send();
-// - Get comments and fill in post - //
-var xhttpComments = new XMLHttpRequest();
-xhttpComments.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-       // Request is complete //
-       var tmp = JSON.parse(xhttpComments.responseText);
-       document.getElementById("commentNum").innerHTML = tmp.length;
-    }
-};
-xhttpComments.open("GET", "https://dev.benworld.net/api/get.post.comments.php?postid=1", true);
-xhttpComments.send();
-*/
 // -------------- //
 var postCount;
 // --- Functions ---- //
+function newPost(){
+    var postInput = document.getElementById('post-input');
+    var postContent = postInput.value;
+    console.log(postContent);
+    // Make request //
+    var xhttpNewPost = new XMLHttpRequest(); 
+    xhttpNewPost.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            // Request is complete //
+            var tmp = this.responseText;
+            console.log(tmp);
+        }
+    };
+    xhttpNewPost.open("POST", "https://dev.benworld.net/api/fb/new.post.php", true);
+    xhttpNewPost.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttpNewPost.send("username="+"Bunnbuns"+"&content="+postContent);
+}
 // -- Get all posts -- //
 function getAllPosts(){
     // Make request //
@@ -621,54 +604,26 @@ function getAllPosts(){
     xhttpPostCount.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             // Request is complete //
-            postCount = parseInt(this.responseText);
-            for(var i=1; i < postCount+1; i++){
-                getPost(i)
+            var timeline = document.getElementById("timeline");
+            document.getElementById("loading-posts").style.display ="";
+            var tmp = JSON.parse(this.responseText);
+            postCount = tmp.length;
+            for(var i=0; i < postCount; i++){
+                console.log('i: '+i+' | id: '+tmp[i].id);
+                post = '<div class="post" id="post-'+tmp[i].id+'"> <div class="post-top"><a href="#"><img id="pfp" class="profile-img" src="https://benworld.net/protected/u/'+tmp[i].pfp+'"></a><div class="inline-block"><a class="has-text-weight-semibold name" href="#"><span id="'+tmp[i].id+'-name">'+tmp[i].name+'</span></a><span class="time">'+formatDateTime(sqlToJsDate(tmp[i]['date']))+'<small><span id="date"></span><b> · </b></small><i class="material-icons listed-icon">public</i></span></div> </div> <span class="hr"></span> <div class="post-content"> <h4 id="content">'+tmp[i].content+'</h4> </div> <div class="post-bottom"> <div class="post-bottom-inside"> <div class="post-info"><span class="likes"><i class="material-icons">thumb_up</i> <span id="'+tmp[i].id+'-likes"> </span> </span> <span><span id="'+tmp[i].id+'-commentNum"> </span></span></div> <div class="post-actions"> <i style="color:transparent;">.</i><a href="#" style="float:left;"><i class="material-icons">thumb_up_alt</i> <small style="vertical-align:middle;"> Like</small></a><a href="#" style="float:right;"><i class="material-icons">comment</i> <small style="vertical-align:middle;"> Comment</small></a> </div> </div> <div class="post-comment-sec"> <span id="'+tmp[i].id+'-comments"><img class="loading" src="images/fb-loading.svg"></span> <div class="post-comment"> <div class="fb-card-comments"> <img class="fb-user-comment" src="https://benworld.net/protected/u/enzo-pfp-sm.jpg"> <input class="fb-card-input" placeholder="Write a comment"> <div class="fb-card-input-icons"> </div> </div> </div> </div>  </div> </div>';
+                document.getElementById("timeline").innerHTML += post;
+                updatePost(tmp[i].id);
             }
         }
     };
-    xhttpPostCount.open("GET", "https://dev.benworld.net/api/get.post.count.php", true);
+    xhttpPostCount.open("GET", "https://dev.benworld.net/api/fb/get.posts.php", true);
     xhttpPostCount.send();
 }
-// -- Get post -- //
-function getPost(postid){
-    var timeline = document.getElementById("timeline");
-    document.getElementById("loading-posts").style.display ="";
-    var post;
-    // Make request //
-    var xhttpPost = new XMLHttpRequest();
-    xhttpPost.addEventListener("load", putPost);     
-
-    xhttpPost.open("GET", "https://dev.benworld.net/api/get.post.php?id="+postid, true);
-    xhttpPost.send();
-}
-function putPost(){
-    // Request is complete //
-    var timeline = document.getElementById("timeline");
-    var tmp = JSON.parse(this.responseText);
-    post = '<div class="post" id="'+tmp[0].id+'"> <div class="post-top"><a href="#"><img id="'+tmp[0].username+'-pfp" class="profile-img" src="https://benworld.net/protected/u/default.png"></a><div class="inline-block"><a class="has-text-weight-semibold name" href="#"><span id="'+tmp[0].id+'-name">@'+tmp[0].username+'</span></a><span class="time">'+formatDateTime(sqlToJsDate(tmp[0]['date']))+'<small><span id="date"></span><b> · </b></small><i class="material-icons listed-icon">public</i></span></div> </div> <span class="hr"></span> <div class="post-content"> <h4 id="content">'+tmp[0].content+'</h4> </div> <div class="post-bottom"> <div class="post-bottom-inside"> <div class="post-info"><span class="likes"><i class="material-icons">thumb_up</i> <span id="'+tmp[0].id+'-likes"> </span> </span> <span><span id="'+tmp[0].id+'-commentNum"> </span></span></div> <div class="post-actions"> <i style="color:transparent;">.</i><a href="#" style="float:left;"><i class="material-icons">thumb_up_alt</i> <small style="vertical-align:middle;"> Like</small></a><a href="#" style="float:right;"><i class="material-icons">comment</i> <small style="vertical-align:middle;"> Comment</small></a> </div> </div> <div class="post-comment-sec"> <span id="'+tmp[0].id+'-comments"></span> <div class="post-comment"> <div class="fb-card-comments"> <img class="fb-user-comment" src="https://benworld.net/protected/u/enzo-pfp-sm.jpg"> <input class="fb-card-input" placeholder="Write a comment"> <div class="fb-card-input-icons"> </div> </div> </div> </div>  </div> </div>';
-    document.getElementById("timeline").innerHTML += post;
-    updatePost(tmp[0].id, tmp[0].username);
-}
-function updatePost(postid, username){
+// - update posts with info from second request - //
+function updatePost(postid){
     document.getElementById("loading-posts").style.display ="none";
-    postNameFromUsername(username, postid);
     postLikes(postid);
     postComments(postid);
-}
-// - Gets name from username - //
-function postNameFromUsername(username, postid){
-    var xhttpName = new XMLHttpRequest();
-    xhttpName.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            // Request is complete //
-            var tmp = JSON.parse(xhttpName.responseText);
-            document.getElementById(postid+"-name").innerHTML = tmp[0]['name'];
-            document.getElementById(username+"-pfp").src = 'https://benworld.net/protected/u/'+tmp[0]['profile_pic'];
-        }
-    };
-    xhttpName.open("GET", "https://dev.benworld.net/api/get.name.php?username="+username, true);
-    xhttpName.send();
 }
 // - Get likes from postid - //
 function postLikes(postid){
@@ -687,19 +642,6 @@ function postLikes(postid){
     xhttpLikes.open("GET", "https://dev.benworld.net/api/get.post.likes.php?postid="+postid, true);
     xhttpLikes.send();
 }
-// - Gets pfp from username - //
-function setPfp(username){
-    var xhttpName = new XMLHttpRequest();
-    xhttpName.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            // Request is complete //
-            var tmp = JSON.parse(xhttpName.responseText);
-            document.getElementsByClassName(username+"-pfp").src = 'https://benworld.net/protected/u/'+tmp[0]['profile_pic'];
-        }
-    };
-    xhttpName.open("GET", "https://dev.benworld.net/api/get.name.php?username="+username, true);
-    xhttpName.send();
-}
 // - Get comments from postid - //
 function postComments(postid){
     var xhttpComments = new XMLHttpRequest();
@@ -707,24 +649,29 @@ function postComments(postid){
         if (this.readyState == 4 && this.status == 200) {
             // Request is complete //
             var tmp = JSON.parse(xhttpComments.responseText);
-            if(tmp.length == '1'){
-                document.getElementById(postid+"-commentNum").innerHTML = tmp.length+' Comment';
+            if(tmp.length == '0'){
+                console.log("Com- postid= "+postid+" & tmp.="+tmp.length+' (No comments)');
+                document.getElementById(postid+"-commentNum").innerHTML = '0 Comments';
+                document.getElementById(postid+"-comments").innerHTML = "";
             }else{
-                document.getElementById(postid+"-commentNum").innerHTML = tmp.length+' Comments';
-            }
-            if(tmp.length > 0){
-                for(var i=0; i < tmp.length+1; i++){
-                    document.getElementById(postid+"-comments").innerHTML += '<div class="post-comment"> <a href="#"><img class="'+tmp[0].username+'-pfp profile-img" src="//benworld.net/protected/u/default.png"></a> <span class="comment-text"><a href="#" class="comment-name">'+tmp[i].username+'</a> '+tmp[i].content+'</span><span class="time">1 min</span> </div><div class="sp"></div>';
-                    setPfp(tmp[i].username);
+                if(tmp.length == '1'){
+                    document.getElementById(postid+"-commentNum").innerHTML = tmp.length+' Comment';
+                }else{
+                    document.getElementById(postid+"-commentNum").innerHTML = tmp.length+' Comments';
                 }
+                console.log("Com- postid= "+postid+" & tmp.="+tmp.length);
+                    document.getElementById(postid+"-comments").innerHTML = "";
+                    for(var i=0; i < tmp.length+1; i++){
+                        document.getElementById(postid+"-comments").innerHTML += '<div class="post-comment"> <a href="#"><img class="pfp profile-img" src="//benworld.net/protected/u/'+tmp[i].pfp+'"></a> <span class="comment-text"><a href="#" class="comment-name">'+tmp[i].name+'</a> '+tmp[i].content+'</span><span class="time">1 min</span> </div><div class="sp"></div>';
+                    }
             }
         }
     };
-    xhttpComments.open("GET", "https://dev.benworld.net/api/get.post.comments.php?postid="+postid, true);
+    xhttpComments.open("GET", "https://dev.benworld.net/api/fb/get.post.comments.php?postid="+postid, true);
     xhttpComments.send();
 }
 
-// - Formats date and time to 1/1/2019 - //
+// - Formats date and time to m/d/yyyy - //
 function formatDateTime(date){
   var hours = date.getHours();
   var minutes = date.getMinutes();
